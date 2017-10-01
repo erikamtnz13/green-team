@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/erikamtnz13/green-team#readme",
   "dependencies": {
+    "express": "^4.16.1",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.10",
+    "method-override": "^2.3.10",
+    "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
-    "sequelize": "^4.13.0"
+    "sequelize": "^4.13.1"
   }
 }
