@@ -47,8 +47,6 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 - [Green Team: Unnamed Turnbased Game](#green-team-unnamed-turnbased-game)
     - [Description](#description)
     - [Status](#status)
-            - [- #### WORK IN PROGRESS](#work-in-progress)
-        - [To Do](#to-do)
     - [How to Use (Game)](#how-to-use-game)
     - [Installation (Source Code)](#installation-source-code)
     - [Tech/Framework Used](#techframework-used)
@@ -117,7 +115,7 @@ Source https://github.com/erikamtnz13/green-team.git
 
 ## Green Team Members:
 - [Corey Rodems](https://github.com/coreyro "Corey Rodems") (Project Management/ Front-end / Game Logic / Handlebars)
-- [Steven Simone](https://github.com/theRealScoobaSteve "Steven Simon") (Front-end / Game Logic / Handlebars)
+- [Steven Simone](https://github.com/theRealScoobaSteve "Steven Simone") (Front-end / Game Logic / Handlebars)
 - [Erika Martinez](https://github.com/erikamtnz13 "Erica Martinez") (Back-end / Player Data/ Routing)
 - [Peter Surowski](https://github.com/PeterSurowski "Peter Surowski") (Back-end / User Login / Routing)
 ---
