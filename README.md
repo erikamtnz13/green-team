@@ -22,6 +22,7 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 - [ ] Backend - 
     - [ ] models
     - [ ] db config
+    - [ ] login and auth
     - [ ] routes
     - [ ] tests
 - [ ] Frontend - 
