@@ -51,14 +51,14 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: true
   });
 
-  // Player.associate = function(models){
-  //   Player.belongsTo(models.userInfo, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
+  Player.associate = function(models){
+    Player.belongsTo(models.UserInfo, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
 
     
-  // };
+  };
     return Player;
   };

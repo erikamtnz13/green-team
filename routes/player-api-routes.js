@@ -15,16 +15,16 @@ module.exports = function(app) {
   // GET route for getting all of the posts
   app.get("/api/players", function(req, res) {
     var query = {};
-    // if (req.query.userInfo_id) {
-    //   query.userInfo_id = req.query.userInfo_id;
-    // }
+    if (req.query.userInfo_id) {
+      query.userInfo_id = req.query.userInfo_id;
+    }
 
     // Here we add an "include" property to our options in our findAll query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Author
     db.Player.findAll({
-      where: query
-      // include: [db.UserInfo]
+      where: query,
+      include: [db.UserInfo]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
     });
@@ -38,8 +38,8 @@ module.exports = function(app) {
     db.Player.findOne({
       where: {
         id: req.params.id
-      }
-      // include: [db.UserInfo]
+      },
+      include: [db.UserInfo]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
     });
