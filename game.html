@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+		<link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicon/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicon/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicon/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicon/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="assets/img/favicon/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<script
+		  src="https://code.jquery.com/jquery-3.2.1.min.js"
+		  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		  crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="
+		sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+		<script type="text/javascript" src="assets/js/main.js"></script>
+
+		<title>Playing DS RPG</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Press+Start+2P" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+	</head>
+	<body>
+		<nav i class="navbar navbar-inverse">
+
+			<div class="container">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+				<div class="</div>">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" id="navbrand" href="index.html">DS RPG</a>
+				</div>
+
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						
+						<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="help.html" target="_blank">Help</a></li>
+						
+						
+					</ul>
+					</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+
+	<div id="headRow" class="row">
+		<div class="container">
+			<div class="jumbotron">
+				<div class="container">
+					<div class="col-md-12" id="mainGameBox">
+						<img src="assets/img/maw.jpg" id="startImage" class="center-block img-responsive" >
+						<p class="startText"> You find yourself at the entrance to a dark and dangerous dungeon. A cool stale breeze carries echos of screams and laughter from deep within to the mouth of the dungeon.</p>
+						<div class="row">
+							<div class="col-md-2"></div>
+							<div class="col-md-8">
+								<h2>Do you enter the dungeon?</h2>
+							</div>
+							<div class="col-md-2"></div>
+							<div class="row">
+								<div class="col-md-4"></div>
+								<div class="col-md-2">
+								<button id="enterDunBtn" class="btn btn-default btn-lg center-block">YES</button>
+								</div>
+								<div class="col-md-2">
+								<button id="quitDunBtn" class="btn btn-default btn-lg center-block">NO</button>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" id="foundEnemy">
+		<div class="container jumbotron">
+			<div class="col-md-12">
+			<span id="newEnemy"></span>
+			</div>
+		</div>
+	</div>
+	<div class="row" id="hudRow">
+		<div class="container">
+			<div class="jumbotron">
+				<div class="container">
+					<div class="row">
+						
+						<div class="col-md-12">
+							<h2 class="HP" id="playerHP"></h2>
+							<h3 class="HP" id="playerLevel"></h3>
+							
+							<br>
+						</div>
+						
+						</div>
+						<div id="bottonHud" class="row">
+							<div id="playerWeap" class="col-md-4">
+								<div id="statsDiv" class="col-md-12">
+										<h2>Stats</h2>
+
+										<div id="dmg" class="stat col-md-4">
+										<h5>Damage</h5>
+										<img class="center-block" id="sharpenBtn" height="40" src="assets/img/attack.png">
+										<h4 id="dmgStat">+3</h4>
+										</div>
+										
+										<div id="harden" class="stat col-md-4">
+										<h5>Defense</h5>
+										<img class="center-block" id="hardenBtn" src="assets/img/shield.png" height="40">
+										<h4 id="defStat">+3</h4>
+										
+										</div>
+
+										<div id="accu" class="stat col-md-4">
+										<h5 >Attack</h5>
+										<img class="center-block" id="accuBtn" height="40" src="assets/img/accu.png">
+										<h4 id="accuStat">+ 3</h4>
+										
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<h3 id="otherStats"></h3>
+											</div>
+										</div>
+									
+								</div>
+								
+
+							</div>
+
+
+							<div class="col-md-4">
+								<span id="hpPotionsh3"></span>	
+								<button type="button" id="potionButton" class="inline-block btn btn-success pull-right">Heal</button>					
+								<br>
+								<br>
+								<span id="goldh3"></span>
+								<button class="btn btn-warning btn inline-block pull-right" id="shopButton">Shop</button>
+								<br>
+								<br>
+								
+								<span id="xph3"></span>
+								<button class="btn btn-default btn inline-block pull-right" id="lvlUpBtn">Lvl Up</button>
+
+								<h3 id="enemiesKilledh3"></h3>
+							
+							
+								
+							</div>
+								
+							
+							<div class="col-md-4">
+									<div id="storeDiv" class="col-md-12">
+										<h2>Store</h2>
+
+										<div id="potions" class="col-md-3">
+										<button id="potionBtn" class="shpBtn">
+										<img  height="40" src="assets/img/potion.png">
+										<h5 id="potionBtnTxt"></h5>
+										</button>
+										</div>
+
+										<div id="sharpen" class="col-md-3">
+										<button id="dmgBtn" class="shpBtn">
+										<img  height="40" src="assets/img/attack.png">
+										<h5 id="dmgBtnTxt"></h5>
+										</button>
+										</div>
+																			
+										<div id="harden" class="col-md-3">
+										<button id="defBtn" class="shpBtn">
+										<img src="assets/img/shield.png" height="40">
+										<h5 id="defBtnTxt"></h5>
+										</button>
+										</div>
+
+										<div id="accu" class="col-md-3">
+										<button id="accBtn" class="shpBtn">
+										<img height="40" src="assets/img/accu.png">
+										<h5 id="accBtnTxt"></h5>
+										</button>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<h3 id="bought"></h3>
+												<button id="done" class="btn btn-warning">Done
+												</button>
+											</div>
+										</div>
+									
+									</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<audio autoplay volume="0.1" id="gameMusic" class="center-block" src="assets/music.mp3"></audio>
+								</div>
+							</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+
+
+	</body>
+</html>
