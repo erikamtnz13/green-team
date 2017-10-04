@@ -1,0 +1,9 @@
+
+.jumbotron{
+    background-color: darkred;
+    box-shadow: 4px 8px 10px black;
+}
+h1,h2,h3,h4,h5,h6{
+    color: #fff;
+    text-shadow: 3px 4px 9px black;
+}
