@@ -1,5 +1,10 @@
 $(document).ready(function($){
 
+    
+    
+    localStorage.UID = 1;
+    
+
     $("#storeDiv").hide()
     $("#shopButton").show()
     $("#hudRow").hide()
@@ -129,21 +134,21 @@ var monsters = [
         })
         
     }
-    var getPlayerData = (player) =>{
-        $.get( "/api/players/1", function( player ) {
-            console.log(player)
-            $("#potionBtnTxt").text(player.gold + " gold")
-            $("#dmgStat").text(player.damage + "/15")
-            $("#defStat").text(player.defense + "/10")
-            $("#accuStat").text(player.attack + "/10")
-            $("#playerHP").html(player.hp + " HP")
-            $("#playerLevel").html("Player Level: " + player.lvl)
-            $("#goldh3").html("Gold: " + player.gold)
-            $("#hpPotionsh3").html("Potions: " + player.potions)
-            $("#xph3").html("XP: " + player.xp)
-            $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
-        })
-    }
+    // var getPlayerData = (UID) =>{
+    //     $.get( "/api/players/" + UID, function( player ) {
+    //         console.log(player)
+    //         $("#potionBtnTxt").text(player.gold + " gold")
+    //         $("#dmgStat").text(player.damage + "/15")
+    //         $("#defStat").text(player.defense + "/10")
+    //         $("#accuStat").text(player.attack + "/10")
+    //         $("#playerHP").html(player.hp + " HP")
+    //         $("#playerLevel").html("Player Level: " + player.lvl)
+    //         $("#goldh3").html("Gold: " + player.gold)
+    //         $("#hpPotionsh3").html("Potions: " + player.potions)
+    //         $("#xph3").html("XP: " + player.xp)
+    //         $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
+    //     })
+    // }
 
     
 
@@ -228,7 +233,6 @@ var monsters = [
         $(".room").on("click", function(){
             GenerateItem()
             updatePlayer(player)
-            // getPlayerData(player)
             return Main(player)
     })
     }
@@ -267,7 +271,7 @@ var monsters = [
                 player.gold -= player.potionGoldNeed;
                 $("#goldh3").html("Gold: " + player.gold);
                 player.potionGoldNeed += 10;
-                $("#hpPotionsh3").replaceWith('<span id="hpPotionsh3">Potions: ' + player.potions + '</span>');
+                $("#hpPotionsh3").html('Potions: ' + player.potions);
                 $("#defBtnTxt").text(player.defGoldNeed + " gold");
                 $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
                 $("#accBtnTxt").text(player.accuGoldNeed + " gold");
@@ -513,7 +517,7 @@ var monsters = [
 
     $("#enterDunBtn").on("click",function(e){
         console.log("CLICKED")
-        $.get( "/api/players/1", function( data ) {
+        $.get( "/api/players/" + localStorage.UID, function( data ) {
             console.log(data)
             const player = data
             $("#hudRow").show()
@@ -538,7 +542,7 @@ var monsters = [
             $("#done").on("click", function(){
                 hideShop()
             });
-    
+            
             Main(player);
         })
     })
