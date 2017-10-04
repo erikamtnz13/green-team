@@ -289,7 +289,7 @@ var monsters = [
         var randNum = GetRandomInt(1,2);
         var scenario
         
-        switch(2)
+        switch(randNum)
         {
             case 1: scenario = GenerateMonster(player)
             break
@@ -450,7 +450,7 @@ var monsters = [
                             function waity(){
                                 $("#killed").hide(400)
                                 $("#eimg").hide()
-                                Main(player)
+                                return Main(player)
                             }
                         }
                     }
@@ -477,7 +477,7 @@ var monsters = [
                             function waity(){
                                 $("#killed").hide(400)
                                 $("#eimg").hide()
-                                Main(player)
+                                return Main(player)
                             }
                         }
 
@@ -489,7 +489,7 @@ var monsters = [
 
     var Main = (player) =>
     {
-        
+        updatePlayer(player)
         $("#storeDiv").hide()
         $("#shopButton").show()
         $("#mainGameBox").empty()
