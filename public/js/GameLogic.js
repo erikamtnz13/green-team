@@ -200,7 +200,8 @@ var monsters = [
 
     var GeneratePath = (player) =>
     {
-        var newRooms = $(
+        
+        let newRooms = $(
             '<div class="row"><div class="col-md-12"><span id="newRoomText"></span></div></div><div class="row"> <div class="col-md-4"></div> <div id="whichWay" class="col-md-4"></div> <div class="col-md-4"></div></div>');
         $("#mainGameBox").append(newRooms);
         let randNum = GetRandomInt(1,4) 
@@ -222,23 +223,73 @@ var monsters = [
             roomBtn.attr("data-room", rooms[i]);
             roomBtn.attr("id", rooms[i]);
             roomBtn.text(rooms[i]);
-            $("#whichWay").append(roomBtn);
-            
-            $(".room").on("click", function(){
-                GenerateItem()
-                updatePlayer(player)
-                getPlayerData(player)
-                Main(player)
-        })
+            $("#whichWay").append(roomBtn);           
+        }
+        $(".room").on("click", function(){
+            GenerateItem()
+            updatePlayer(player)
+            // getPlayerData(player)
+            return Main(player)
+    })
     }
+
+    var shopFunc = (player) =>{
+        console.log("Open Store");
+        $("#storeDiv").show();
+        $("#sharpen").show();
+        $("#shield").show();
+        $("#accu").show();
+        $("#shopButton").hide();
+        $("#done").show();
+        
+        $("#defBtnTxt").text(player.defGoldNeed + " gold");
+        $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+        $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+        $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
     }
+
+    var hideShop = () => {
+        $("#done").hide();
+        $("#shopButton").show();
+        setTimeout(closeShop, 1)
+        function closeShop(){
+            $("#storeDiv").hide();
+            $("#shopButton").show();
+            $("")
+        }
+    }
+
+    var buyPotion = (player) => {
+        if(player.potions <= 10){
+            if(player.gold >= player.potionGoldNeed){
+                console.log("potionbuy");
+                player.potions += 1;
+                player.gold -= player.potionGoldNeed;
+                $("#goldh3").html("Gold: " + player.gold);
+                player.potionGoldNeed += 10;
+                $("#hpPotionsh3").replaceWith('<span id="hpPotionsh3">Potions: ' + player.potions + '</span>');
+                $("#defBtnTxt").text(player.defGoldNeed + " gold");
+                $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+                $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+                $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+                
+            }
+            else{
+                alert("not enough gold!");
+            }
+        }
+        else{
+            alert("You have too many potions!");
+        }
+    }
+
 
     var GenerateScenario = (player) =>
     {
         var randNum = GetRandomInt(1,2);
         var scenario
         
-        switch(randNum)
+        switch(2)
         {
             case 1: scenario = GenerateMonster(player)
             break
@@ -438,6 +489,7 @@ var monsters = [
 
     var Main = (player) =>
     {
+        
         $("#storeDiv").hide()
         $("#shopButton").show()
         $("#mainGameBox").empty()
@@ -448,59 +500,8 @@ var monsters = [
         // {
         GenerateScenario(player)
         // }
-        $("#potionBtn").on("click", function(){
-            console.log("clicked");
-            if(player.potions <= 10){
-                if(player.gold >= player.potionGoldNeed){
-                    console.log("potionbuy");
-                    player.potions += 1;
-                    player.gold -= player.potionGoldNeed;
-                    $("#goldh3").html("Gold: " + player.gold);
-                    player.potionGoldNeed += 10;
-                    $("#hpPotionsh3").replaceWith('<span id="hpPotionsh3">Potions: ' + player.potions + '</span>');
-                    $("#defBtnTxt").text(player.defGoldNeed + " gold");
-                    $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
-                    $("#accBtnTxt").text(player.accuGoldNeed + " gold");
-                    $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
-                    
-                }
-                else{
-                    alert("not enough gold!");
-                }
-            }
-            else{
-                alert("You have too many potions!");
-            }
-    
-        });
-
-        $("#shopButton").on("click", function(){
-            console.log("Open Store");
-            $("#storeDiv").show();
-            $("#sharpen").show();
-            $("#shield").show();
-            $("#accu").show();
-            $("#shopButton").hide();
-            $("#done").show();
-            
-            $("#defBtnTxt").text(player.defGoldNeed + " gold");
-            $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
-            $("#accBtnTxt").text(player.accuGoldNeed + " gold");
-            $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
-            
-        });
         
         
-        
-        
-        function hideShop(){
-            setTimeout(closeShop, 1)
-            function closeShop(){
-                $("#storeDiv").hide();
-                $("#shopButton").show();
-                $("")
-            }
-        }
         
     }
     $("#storeDiv").hide()
@@ -528,6 +529,15 @@ var monsters = [
             $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
             $("#mainGameBox").replaceWith('<div class="col-md-12" id="mainGameBox">')
             $("#whichWay").show()
+            $("#potionBtn").on("click", function(){
+                buyPotion(player)
+            });
+            $("#shopButton").on("click", function(){
+                shopFunc(player)            
+            });               
+            $("#done").on("click", function(){
+                hideShop()
+            });
     
             Main(player);
         })
