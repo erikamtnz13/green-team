@@ -1,4 +1,4 @@
-var Monster = require("./monsters.js")
+var Monster = require("./Monsters.js")
 
 var GetRandomInt = (min, max) =>
 {
@@ -9,19 +9,39 @@ var GenerateMonster = () =>
 {
     let randNum = GetRandomInt(0,4) 
     let monster = Monster[randNum]
-
+    return monster
 }
 
 var GenerateItem = () =>
 {
     let randNum = GetRandomInt(0,4) 
     let item = Item[randNum]
+    return item
 }
 
 var GeneratePath = () =>
 {
     let randNum = GetRandomInt(0,4) 
     let path = Path[randNum]
+    return path
+}
+
+var GenerateScenario = () =>
+{
+    var randNum = GetRandomInt(1,3)
+    var scenario
+    
+    switch(randNum)
+    {
+        case 1: scenario = GenerateMonster()
+        break
+        case 2: scenario = GenerateItem()
+        break
+        case 3: scenario = GeneratePath()
+        break
+    }
+
+    return scenario    
 }
 
 var Main = () =>
@@ -30,17 +50,7 @@ var Main = () =>
 
     while(continueGame)
     {
-        var randNum = GetRandomInt(1,3)
-        
-        switch(randNum)
-        {
-            case 1: GenerateMonster()
-            break
-            case 2: GenerateItem()
-            break
-            case 3: GeneratePath()
-            break
-        }
+       
     }
     
 }
