@@ -13,12 +13,20 @@
     <div class="row jumbotron" id='playerStats'>
         <div class="col-sm-4">
             <h3>stats</h3>
+            <h4>Attack: {{player.attack}}</h4>
+            <h4>Damage: {{player.damage}}</h4>
+            <h4>Defense: {{player.defense}}</h4>
         </div>
         <div class="col-sm-4" id='playerInfo'>
             <h3>player info</h3>
+            <h4>Name: {{player.name}}</h4>
+            <h4>HP: {{player.hp}}</h4>
+            <h4>Level: {{player.lvl}}</h4>
+            <h4>XP: {{player.xp}}</h4>
         </div>
         <div class="col-sm-4" id='playerUpgrades'>
             <h3>store/upgrades</h3>
+            <button id="storeBtn">Store</button>
         </div>
     </div>
 </div>

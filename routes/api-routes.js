@@ -1,6 +1,20 @@
+var express = require("express");
+
+var router = express.Router();
+
+var db = require("../models");
+
 module.exports = function(app){
     app.get("/", function(req,res){
-        res.render("index")
+        db.player.findOne({
+                where: {
+                        id:1
+            }
+        }).then(function(result){
+            console.log({player: result})
+            res.render("index", {player: result})
+        })
+        
     });
 
     app.post("/", function(req,res){

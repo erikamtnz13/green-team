@@ -1,4 +1,4 @@
-var enemies = [
+var monster = [
     //===========New Enemy===========//
     {
         //----------stats----------//
@@ -86,7 +86,7 @@ var enemies = [
 
 ];
 
-module.exports = enemies;
+module.exports = monster;
 
 // var createEnemy = function(enemies,name,hp,attack,damage,defense,items,xp,img,dmgImg,killedImg){
 //     this.id = enemies.length + 1 ;
