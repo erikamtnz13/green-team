@@ -9,9 +9,7 @@ $(document).ready(function($){
 
 var enemiesKilled = 0
 var exp = 0
-var Path = [
-    'North','East','South','West'
-]
+
 var monsters = [
     //===========New Enemy===========//
         {
@@ -26,9 +24,9 @@ var monsters = [
             items: ['gold','potion'],
             xp: +5,
             //----------misc----------//
-            img: "",
+            img: "/img/skel.gif",
             dmgImg: "",
-            killedImg: ""
+            killedImg: "img/skelDead.png"
         },
     
         //===========New Enemy===========//
@@ -44,7 +42,7 @@ var monsters = [
             items: ['gold','potion'],
             xp: +10,
             //----------misc----------//
-            img: "",
+            img: "/img/rat.gif",
             dmgImg: "",
             killedImg: ""
         },
@@ -143,9 +141,11 @@ var monsters = [
             $("#goldh3").html("Gold: " + player.gold)
             $("#hpPotionsh3").html("Potions: " + player.potions)
             $("#xph3").html("XP: " + player.xp)
-            $("#enemiesKilledh3").html("Kills: " + enemiesKilled)
+            $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
         })
     }
+
+    
 
     $("#Done").click((e) =>
     {
@@ -205,13 +205,13 @@ var monsters = [
         $("#mainGameBox").append(newRooms);
         let randNum = GetRandomInt(1,4) 
         switch(randNum){
-            case 1: var rooms = ['North']
+            case 1: var rooms = ['Northward']
             break
-            case 2: var rooms = ['North', 'East']
+            case 2: var rooms = ['Northward','Eastward']
             break
-            case 3: var rooms = ['North', 'East', 'South']
+            case 3: var rooms = ['Northward','Eastward','Southward']
             break
-            case 4: var rooms = ['North', 'East', 'South', 'West']
+            case 4: var rooms = ['Northward','Eastward','Southward','Westward']
             break
         }
         $("#newRoomText").html("You see " + rooms.length+ " cooridors on your path. Choose one.");
@@ -448,6 +448,59 @@ var monsters = [
         // {
         GenerateScenario(player)
         // }
+        $("#potionBtn").on("click", function(){
+            console.log("clicked");
+            if(player.potions <= 10){
+                if(player.gold >= player.potionGoldNeed){
+                    console.log("potionbuy");
+                    player.potions += 1;
+                    player.gold -= player.potionGoldNeed;
+                    $("#goldh3").html("Gold: " + player.gold);
+                    player.potionGoldNeed += 10;
+                    $("#hpPotionsh3").replaceWith('<span id="hpPotionsh3">Potions: ' + player.potions + '</span>');
+                    $("#defBtnTxt").text(player.defGoldNeed + " gold");
+                    $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+                    $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+                    $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+                    
+                }
+                else{
+                    alert("not enough gold!");
+                }
+            }
+            else{
+                alert("You have too many potions!");
+            }
+    
+        });
+
+        $("#shopButton").on("click", function(){
+            console.log("Open Store");
+            $("#storeDiv").show();
+            $("#sharpen").show();
+            $("#shield").show();
+            $("#accu").show();
+            $("#shopButton").hide();
+            $("#done").show();
+            
+            $("#defBtnTxt").text(player.defGoldNeed + " gold");
+            $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+            $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+            $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+            
+        });
+        
+        
+        
+        
+        function hideShop(){
+            setTimeout(closeShop, 1)
+            function closeShop(){
+                $("#storeDiv").hide();
+                $("#shopButton").show();
+                $("")
+            }
+        }
         
     }
     $("#storeDiv").hide()
@@ -463,7 +516,7 @@ var monsters = [
             console.log(data)
             const player = data
             $("#hudRow").show()
-            $("#potionBtnTxt").text(player.gold + " gold")
+            $("#potionBtnTxt").text(player.potionGoldNeed + " gold")
             $("#dmgStat").text(player.damage + "/15")
             $("#defStat").text(player.defense + "/10")
             $("#accuStat").text(player.attack + "/10")
@@ -472,7 +525,7 @@ var monsters = [
             $("#goldh3").html("Gold: " + player.gold)
             $("#hpPotionsh3").html("Potions: " + player.potions)
             $("#xph3").html("XP: " + player.xp)
-            $("#enemiesKilledh3").html("Kills: " + enemiesKilled)
+            $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
             $("#mainGameBox").replaceWith('<div class="col-md-12" id="mainGameBox">')
             $("#whichWay").show()
     
