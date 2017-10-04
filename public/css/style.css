@@ -1,9 +1,165 @@
+body{
+	background-image: url("../img/bg1.jpg");
+
+	
+	color:#fff;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 12pt;
+}
+
+a{
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+h1, h2, h3, h4{
+	text-align: center;
+	font-family: 'Press Start 2P', cursive !important;
+	color: #ffb800 !important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+	
+
+}
+h4{
+	font-size:10pt !important;
+}
+h3{
+	font-size:12pt !important;
+}
+h2{
+	font-size: 16pt !important;
+}
+
+#potionButton, #shopButton, #lvlUpBtn{
+	margin:-8px 0 0 0;
+
+}
+
+.shpBtn{
+	background-color: #035cff;
+    border: 2px #ffb800 solid;
+}
+
+.shpBtn:hover{
+	background-color:#2b0;
+	border:2px #2b0 solid;
+}
+
+#goldh3, #hpPotionsh3, #xph3, #enemiesKilledh3{
+	text-align: left;
+	font-family: 'Press Start 2P', cursive !important;
+	color: #ffb800 !important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+	font-size: 12pt;
+}
+#hpPotionsh3{
+
+}
+
+#whichWay{
+	padding: 30px 0 30px 30px;
+}
+
+#newRoomText, #newEnemy{
+	text-align: center;
+	font-family: 'Press Start 2P', cursive !important;
+	color: #fff !important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+	font-size: 14pt;
+	margin-left: 30px;
+}
+
+#storeDiv, #playerWeap{
+	
+}
+.border-radius{
+	border-radius:10px;
+}
+{
+	margin:-8px 0 0 0;
+}
+
+#bottonHud{
+	border: #ffb800 solid 3px;
+    margin-top: 50px;
+    padding: 25px 0 10px 0;
+}
+
+#playerHP{
+	color: #3d0 !important;
+    border: 2px #2b0 solid;
+    padding: 8px;
+    margin: 0 200px 10px 200px;
+    font-size: 18pt;
+    text-align: center;
+}
+
+ #enemyHpH3{
+ 	color:#f00 !important;
+	border: 2px #f00 solid ;
+	padding: 8px;
+	margin: 20px 0 20px 0;
+}
+
+#playerHPdamaged{
+	color:#f00 !important;
+	border: 2px #f00 solid ;
+	padding: 8px;
+	margin:5px 100px 5px 100px;
+	font-size: 18pt;
+
+}
+
+ #enemyHpH3damaged{
+ 	color:#fff !important;
+	border: 2px #fff solid ;
+	padding: 8px;
+	margin: 20px 0 20px 0;
+}
+
+#mainhead{
+	
+	padding: 10px 0 10px 0;
+    margin-top: inherit;
+}
 
 .jumbotron{
-    background-color: darkred;
-    box-shadow: 4px 8px 10px black;
+	background-color:#444 !important;
+	border:1px solid #666;
 }
-h1,h2,h3,h4,h5,h6{
-    color: #fff;
-    text-shadow: 3px 4px 9px black;
+
+#help{
+	font-size: 12pt;
+}
+
+.row{
+	margin-right: 0;
+	margin-left: 0;
+}
+
+#navbrand{
+	font-size: 14pt;
+	font-family: 'Press Start 2P', cursive;
+	color: #ffb800;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.myheaders{
+	text-align: center;
+	font-family: 'Press Start 2P', cursive;
+	color: #ffb800;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-size: 32pt;
+}
+#newGameButtonDiv{
+	text-align: center;
+}
+
+#newGame{
+	display: inline-block;
+	text-align: center;
+}
+
+.room{
+	text-align: center;
 }

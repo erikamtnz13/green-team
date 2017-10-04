@@ -25,6 +25,7 @@
     "method-override": "^2.3.10",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
+    "path": "^0.12.7",
     "sequelize": "^4.13.3"
   }
 }
