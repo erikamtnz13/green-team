@@ -713,6 +713,7 @@ $(document).ready(function($) {
         $("#enterDunBtn").on("click", function(e) {
             console.log("CLICKED")
             getPlayerData(playerUID).then(function(player){
+                $("#navSpan").html("Welcome " + player.name)
                 $("#hudRow").show()
                 $("#potionBtnTxt").text(player.potionGoldNeed + " gold")
                 $("#dmgStat").text(player.damage + "/15")
