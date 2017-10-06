@@ -125,7 +125,12 @@ var monsters = [
                 xp: player.xp,
                 lvl: player.lvl,
                 potions: player.potions,
-                gold: player.gold 
+                gold: player.gold,
+                defGoldNeed: player.defGoldNeed,
+                dmgGoldNeed: player.dmgGoldNeed,
+                accuGoldNeed: player.accuGoldNeed,
+                potionGoldNeed: player.potionGoldNeed,
+                enemiesKilled: player.enemiesKilled
             },
             success: function(result) {
                 console.log("RESULT: " + result)
@@ -190,7 +195,7 @@ var monsters = [
 		
 
 		
-		$("#attackBtn").on("click", function(){
+		$("#attackBtn").on("click", () =>{
 				combat(monster, player);
 			});
     }
@@ -201,6 +206,40 @@ var monsters = [
         let item = Item[randNum]
         console.log("ITEM: " + item)
         
+    }
+
+    var healPlayer = (player) =>{
+        let healthMax = player.total_hp - 15
+        if(player.hp === player.total_hp){
+            alert("Your health is full!")
+        }
+        else{
+            if(player.potions >= 1){
+                if(player.hp <= healthMax){
+                    player.hp += 15;
+                }
+                else{
+                    player.hp = player.total_hp;
+                }
+                
+                player.potions = player.potions - 1;
+                $("#hpPotionsh3").replaceWith('<h3 id="hpPotionsh3">Potions: ' + player.potions + '</h3>');
+                $("#playerHP").replaceWith('<h2 id="playerHP">' + player.hp + " HP</h2>");
+                
+                console.log("potions " + player.potions);
+                console.log("healthMax " + healthMax);
+                console.log("player.total_hp " + player.total_hp);
+                console.log("player.hp " + player.hp);
+            }
+            else{
+                setTimeout(waitl, 20);
+                    function waitl(){
+                        alert("Out of Health Potions!");
+                    }
+                
+            }
+        }
+    
     }
 
     var GeneratePath = (player) =>
@@ -230,7 +269,7 @@ var monsters = [
             roomBtn.text(rooms[i]);
             $("#whichWay").append(roomBtn);           
         }
-        $(".room").on("click", function(){
+        $(".room").on("click", () =>{
             GenerateItem()
             updatePlayer(player)
             return Main(player)
@@ -308,7 +347,7 @@ var monsters = [
 
 
         function combat(monster, player){
-
+            $("#shopButton").hide()
             $("#eimg").show()
             $("#attackBtn").hide()
             $("#waitAttackBtn").show()
@@ -533,18 +572,123 @@ var monsters = [
             $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
             $("#mainGameBox").replaceWith('<div class="col-md-12" id="mainGameBox">')
             $("#whichWay").show()
-            $("#potionBtn").on("click", function(){
+            $("#potionBtn").on("click", () =>{
                 buyPotion(player)
+                updatePlayer(player)
             });
-            $("#shopButton").on("click", function(){
-                shopFunc(player)            
+            $("#shopButton").on("click", () =>{
+                shopFunc(player)
+                updatePlayer(player)            
             });               
-            $("#done").on("click", function(){
+            $("#done").on("click", () =>{
                 hideShop()
+                updatePlayer(player)
+            });
+            $("#potionButton").on("click", () => {
+                healPlayer(player)
+                updatePlayer(player)
+            })
+            $("#dmgBtn").on("click", function(){
+                dmgButton(player)
+                updatePlayer(player)    
+            });
+            $("#defBtn").on("click", function(){
+                defButton(player)
+                updatePlayer(player)
+            });
+            
+            //button not working
+            $("#accBtn").on("click", function(){
+                accuButton(player)
+                updatePlayer(player)
             });
             
             Main(player);
         })
     })
 })
+
+
+
+var dmgButton = (player) => {
+    if(player.damage <= 15){
+        if(player.gold >= player.dmgGoldNeed){
+            console.log("sharpen");
+            player.damage += 1;
+            
+            player.gold -= player.dmgGoldNeed;
+            $("#goldh3").html("Gold: " + player.gold);
+            player.dmgGoldNeed += 25;
+            $("#dmgStat").text(player.damage + "/15");
+            console.log(player.damge);
+            $("#defBtnTxt").text(player.defGoldNeed + " gold");
+            $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+            $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+            $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+            
+        }
+        else{
+            alert("not enough gold!");
+        }
+    }
+    else{
+        alert("You are at max Damage!");
+    }
+}
+
+var defButton = (player) => {
+    if(player.defense <= 15){
+        if(player.gold >= player.defGoldNeed){
+            console.log("sharpen");
+            player.defense += 1;
+            
+            player.gold -= player.defGoldNeed;
+            $("#goldh3").html("Gold: " + player.gold);
+            player.defGoldNeed += 25;
+            $("#defStat").text(player.defense + "/15");
+            console.log(player.defense);
+            $("#defBtnTxt").text(player.defGoldNeed + " gold");
+            $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+            $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+            $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+            
+        }
+        else{
+            alert("not enough gold!");
+        }
+    }
+    else{
+        alert("You are at max defense!");
+    }
+}
+
+var accuButton = (player) => {
+    if(player.attack <= 15){
+        if(player.gold >= player.accuGoldNeed){
+            console.log("sharpen");
+            player.attack += 1;
+            
+            player.gold -= player.accuGoldNeed;
+            $("#goldh3").html("Gold: " + player.gold);
+            player.accuGoldNeed += 25;
+            $("#accuStat").text(player.attack + "/15");
+            console.log(player.attack);
+            $("#defBtnTxt").text(player.defGoldNeed + " gold");
+            $("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+            $("#accBtnTxt").text(player.accuGoldNeed + " gold");
+            $("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+            
+        }
+        else{
+            alert("not enough gold!");
+        }
+    }
+    else{
+        alert("You are at max Damage!");
+    }
+}
+
+
+
+
 
