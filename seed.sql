@@ -1,5 +1,5 @@
 
-
+use game_db;
 Insert into userinfos (
 name,
 password,
@@ -15,6 +15,7 @@ attack,
 damage,
 defense,
 xp,
+exp,
 lvl,
 potions,
 gold,
@@ -25,7 +26,7 @@ potionGoldNeed,
 enemiesKilled,
 UserInfoId
 ) values
-('Corey',20,20,0,0,6,0,1,5,100,15,15,15,10,0,1);
+('Corey',50,50,0,100,6,50,50,1,5,100,15,15,15,10,0,1);
 
 SELECT * FROM game_db.userinfos;
 SELECT * FROM game_db.players;

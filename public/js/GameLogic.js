@@ -1,7 +1,21 @@
 $(document).ready(function($) {
     
         localStorage.UID = 1;
+        const playerUID = localStorage.getItem("UID");
+        function Main(player){
+            updatePlayer(player)
+            $("#storeDiv").hide()
+            $("#shopButton").show()
+            $("#mainGameBox").empty()
+            $("#mainGameBox").show()
+            $("#lvlUpBtn").hide()
+            $("#foundEnemy").hide()
+            // while(1)
+            // {
+            GenerateScenario(player)
+            // }
     
+        }
         $("#storeDiv").hide()
         $("#shopButton").show()
         $("#hudRow").hide()
@@ -109,7 +123,8 @@ $(document).ready(function($) {
         ]
         var continueGame = true
     
-        var updatePlayer = (player) => {
+        var updatePlayer = function(player) {
+            console.log("UPDATEPLAYER: " + JSON.stringify(player))
             jQuery.ajax({
                 type: 'PUT',
                 url: '/api/players/' + player.id,
@@ -120,6 +135,7 @@ $(document).ready(function($) {
                     damage: player.damage,
                     defense: player.defense,
                     xp: player.xp,
+                    exp: player.exp,
                     lvl: player.lvl,
                     potions: player.potions,
                     gold: player.gold,
@@ -127,7 +143,8 @@ $(document).ready(function($) {
                     dmgGoldNeed: player.dmgGoldNeed,
                     accuGoldNeed: player.accuGoldNeed,
                     potionGoldNeed: player.potionGoldNeed,
-                    enemiesKilled: player.enemiesKilled
+                    enemiesKilled: player.enemiesKilled,
+                    
                 },
                 success: function(result) {
                     console.log("RESULT: " + result)
@@ -214,26 +231,92 @@ $(document).ready(function($) {
                 alert("You are at max Damage!");
             }
         }
+
+        var lvlUp = (playObj) => {
+            var player = playObj
+            console.log("playerxp " + player.xp);
+            if(player.xp <= 75){
+                if(player.exp >= 25){
+                        player.lvl += 1;
+                        player.total_hp += 5;
+                        player.hp = player.total_hp;
+                        // alert("You've leveled up");
+                        player.gold += 75;
+                        $("#goldh3").html("Gold: " + player.gold);
+                        player.exp = 0;
+                        console.log("exp " + player.exp);
+                        $("#eimg").show();
+                        console.log("PLAYERUID: " + playerUID)
+                        updatePlayer(player)
+                                           
+                        setTimeout(waitm, 600);
+                        function waitm(){
+                            getPlayerData(playerUID).then(function(player){
+                            console.log("PLAYERAFTER: " + JSON.stringify(player))
+                            Main(player);
+                        })
+                        }
+                        
+
     
-        // var getPlayerData = (UID) =>{
-        //     $.get( "/api/players/" + UID, function( player ) {
-        //         console.log(player)
-        //         $("#potionBtnTxt").text(player.gold + " gold")
-        //         $("#dmgStat").text(player.damage + "/15")
-        //         $("#defStat").text(player.defense + "/10")
-        //         $("#accuStat").text(player.attack + "/10")
-        //         $("#playerHP").html(player.hp + " HP")
-        //         $("#playerLevel").html("Player Level: " + player.lvl)
-        //         $("#goldh3").html("Gold: " + player.gold)
-        //         $("#hpPotionsh3").html("Potions: " + player.potions)
-        //         $("#xph3").html("XP: " + player.xp)
-        //         $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
-        //     })
-        // }
     
-        $("#Done").click((e) => {
-            continueGame = e.target.value
-        })
+                        
+                }	
+                else{
+                    alert("You can only level up every 25xp!");
+                }
+            }
+            else{
+                if(player.exp >= 75){
+                        player.lvl += 1;
+                        player.total_hp += 10;
+                        player.gold += 150;
+                        $("#goldh3").html("Gold: " + player.gold);
+                        player.hp = player.total_hp;
+                        // alert("You've leveled up");
+                        player.exp = 0;
+                        console.log("exp " + player.exp);
+                        $("#eimg").show();
+                        setTimeout(waitm, 600);
+                        function waitm(){
+                            getPlayerData(playerUID).then(function(player){
+                            console.log("PLAYERAFTER: " + JSON.stringify(player))
+                            Main(player);
+                        })
+                        }
+                        
+                        
+                }	
+                else{
+                    alert("You can only level up every 75xp!");
+                }
+            }			
+        }
+    
+        var getPlayerData = function(UID)
+        {
+            return new Promise(function(res,rej){
+
+            
+                $.get( "/api/players/" + UID, function( player ) 
+                {
+                    console.log("PLAYER: " + JSON.stringify(player))
+                    $("#potionBtnTxt").text(player.gold + " gold")
+                    $("#dmgStat").text(player.damage + "/15")
+                    $("#defStat").text(player.defense + "/10")
+                    $("#accuStat").text(player.attack + "/10")
+                    $("#playerHP").html(player.hp + " HP")
+                    $("#playerLevel").html("Player Level: " + player.lvl)
+                    $("#goldh3").html("Gold: " + player.gold)
+                    $("#hpPotionsh3").html("Potions: " + player.potions)
+                    $("#xph3").html("XP: " + player.xp)
+                    $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
+                    res(player)
+                
+                });
+            })       
+        };
+
     
         var GetRandomInt = (min, max) => {
             return Math.floor(Math.random() * (max - min + 1)) + min
@@ -241,7 +324,15 @@ $(document).ready(function($) {
     
         var GenerateMonster = (player) => {
             let randNum = GetRandomInt(0, 4)
-            let monster = monsters[0]
+            if(player.xp <= 50){
+                var monster = monsters[GetRandomInt(0,1)];
+            }
+            else if(player.xp >= 50){
+                var monster = monsters[GetRandomInt(1,3)];
+            }
+            else if(player.xp >= 80){
+                var monster = monsters[GetRandomInt(3,6)];
+            }
             $("#shopButton").hide();
     
             var enemyAppearText = ('<div class="row"> <div id="playerInfo" class="col-md-4"><h2 id="playerAttack"></h2><h2 id="playerDamage"></h2></div> <div id="appearEnemy" class="col-md-4"></div> <div id="enemyInfo" class="col-md-4"><h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2></div></div>');
@@ -529,14 +620,14 @@ $(document).ready(function($) {
                 function waitk() {
                     $("#killed").html("You gained " + monster.xp + " XP!")
                 }
-                enemiesKilled += 1
+                player.enemiesKilled += 1
                 player.xp += monster.xp
                 console.log("Player XP: " + player.xp)
-                console.log("Enemies Killed: " + enemiesKilled)
+                console.log("Enemies Killed: " + player.enemiesKilled)
                 $("#xph3").html("XP: " + player.xp)
-                exp += monster.xp
-                console.log("EXP POOL: " + exp)
-                $("#enemiesKilledh3").html("Killed: " + enemiesKilled)
+                player.exp += monster.xp
+                console.log("EXP POOL: " + player.exp)
+                $("#player.enemiesKilledh3").html("Killed: " + player.enemiesKilled)
                 console.log("You've killed " + monster.name + "!")
     
                 updatePlayer(player)
@@ -548,7 +639,7 @@ $(document).ready(function($) {
                 }
     
                 if (player.xp <= 75) {
-                    if (exp >= 25) {
+                    if (player.exp >= 25) {
                         setTimeout(waitlv, 10)
     
                         function waitlv() {
@@ -578,7 +669,7 @@ $(document).ready(function($) {
                 }
                 else {
     
-                    if (exp >= 75) {
+                    if (player.exp >= 75) {
                         setTimeout(waitlv, 10)
     
                         function waitlv() {
@@ -611,20 +702,7 @@ $(document).ready(function($) {
     
         }
     
-        var Main = (player) => {
-            updatePlayer(player)
-            $("#storeDiv").hide()
-            $("#shopButton").show()
-            $("#mainGameBox").empty()
-            $("#mainGameBox").show()
-            $("#lvlUpBtn").hide()
-            $("#foundEnemy").hide()
-            // while(1)
-            // {
-            GenerateScenario(player)
-            // }
-    
-        }
+        
         $("#storeDiv").hide()
         $("#shopButton").show()
         $("#hudRow").hide()
@@ -634,9 +712,7 @@ $(document).ready(function($) {
     
         $("#enterDunBtn").on("click", function(e) {
             console.log("CLICKED")
-            $.get("/api/players/" + localStorage.UID, function(data) {
-                console.log(data)
-                const player = data
+            getPlayerData(playerUID).then(function(player){
                 $("#hudRow").show()
                 $("#potionBtnTxt").text(player.potionGoldNeed + " gold")
                 $("#dmgStat").text(player.damage + "/15")
@@ -680,8 +756,20 @@ $(document).ready(function($) {
                     accuButton(player)
                     updatePlayer(player)
                 });
+                $("#lvlUpBtn").on("click", function(){
+                    console.log("playerxp " + player.xp);
+                    lvlUp(player)
+                    updatePlayer(player)		
+                });
     
                 Main(player);
             })
+            
         })
     })
+
+
+
+   
+    
+   
