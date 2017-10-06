@@ -71,6 +71,18 @@ module.exports = function(sequelize, DataTypes) {
       enemiesKilled: {
         type: DataTypes.INTEGER,
         allowNull: true
+      },
+      char_img: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      char_idle: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      char_attack: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
   {
