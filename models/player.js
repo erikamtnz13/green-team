@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-	var player = sequelize.define("player", {
-	  player_UID: {
+	var Player = sequelize.define("Player", {
+	  Player_UID: {
 		type: DataTypes.INTEGER,
 		allowNull: false,
       },
