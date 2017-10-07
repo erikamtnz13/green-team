@@ -10,9 +10,10 @@ $(document).ready(function($) {
             $("#mainGameBox").show()
             $("#lvlUpBtn").hide()
             $("#foundEnemy").hide()
-{
+            // while(1)
+            // {
             GenerateScenario(player)
- 
+            // }
     
         }
         $("#storeDiv").hide()
@@ -355,13 +356,7 @@ $(document).ready(function($) {
             $("#enemyAttack").show();
     
             $("#attackBtn").on("click", () => {
-         
-                    combat(monster, player);
-              
-                
-                
-                
-            
+                combat(monster, player);
             });
         }
     
@@ -538,7 +533,6 @@ $(document).ready(function($) {
                     $("#playerDamage").hide(200)
                 }
                 monster.hp -= pDamage
-                updatePlayer(player)
                 $("#enemyHpH3").replaceWith('<h4 id="enemyHpH3">' + monster.hp + " HP</h4>")
     
             }
@@ -548,7 +542,7 @@ $(document).ready(function($) {
                 $("#playerAttack").replaceWith('<h3 id="playerAttack">' + monster.name + ' dodged your attack!</h3>')
                 console.log("Missed attack. Attack roll " + pAttack + " < " + monster.defense)
                 setTimeout(waitm, 1500)
-                
+    
                 function waitm() {
                     $("#playerAttack").hide(200)
                 }
@@ -585,7 +579,7 @@ $(document).ready(function($) {
                             $("#playerDamage").hide()
                             $("#enemyName").hide()
                             $("#playerHP").replaceWith('<h2 id="playerHP">YOU ARE DEAD</h2>')
-                            updatePlayer(player)
+    
                             setTimeout(waity, 2800)
     
                             function waity() {
@@ -605,7 +599,7 @@ $(document).ready(function($) {
                         $("#enemyAttack").replaceWith('<h4 id="enemyAttack">' + monster.name + ' Missed their attack!</h4>')
                         console.log("Missed attack. Attack roll " + eAttack + " < " + player.defense)
                         setTimeout(waitg, 1200)
-                        updatePlayer(player)
+    
                         function waitg() {
                             $("#enemyAttack").hide(200)
                         }
@@ -622,7 +616,7 @@ $(document).ready(function($) {
                 $("#killed").show()
                 $("#killed").html("You've killed " + monster.name + "!")
                 setTimeout(waitk, 1800)
-                
+    
                 function waitk() {
                     $("#killed").html("You gained " + monster.xp + " XP!")
                 }
