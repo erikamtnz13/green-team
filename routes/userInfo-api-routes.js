@@ -35,8 +35,8 @@ module.exports = function(app) {
   app.post("/", function(req, res) {
     console.log(req.body)
     db.UserInfo.create(req.body).then(function(data) {
-      res.json(data)
-      // res.redirect("/");
+      // res.json(data)
+      res.redirect("/");
     });
   });
 
