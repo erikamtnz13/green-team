@@ -19,6 +19,20 @@ module.exports = function(app) {
     });
     
   });
+  app.get("/playerselect",function(req,res){
+    db.Player.findAll({}).then(function(dbPlayer){
+      console.log(dbPlayer);
+      res.render("select", dbPlayer);
+    });
+    
+  });
+  app.post("/playerselect", function(req, res) {
+    console.log(req.body)
+    db.Player.create(req.body).then(function(data) {
+      // res.json(data)
+      res.redirect("/playerselect");
+    });
+  });
 
   // GET route for getting all of the posts
   app.get("/api/players", function(req, res) {
@@ -89,4 +103,5 @@ module.exports = function(app) {
       res.json(dbPlayer);
     });
   });
+
 };

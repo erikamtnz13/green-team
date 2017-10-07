@@ -34,9 +34,10 @@ module.exports = function(app) {
   });
   app.post("/", function(req, res) {
     console.log(req.body)
+    req.body.UserInfo = 3;
     db.UserInfo.create(req.body).then(function(data) {
       // res.json(data)
-      res.redirect("/");
+      res.redirect("/playerselect");
     });
   });
 
