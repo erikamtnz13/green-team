@@ -1,20 +1,27 @@
 module.exports = function(sequelize, DataTypes) {
-    var Player = sequelize.define("Player", {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
+	var player = sequelize.define("player", {
+	  player_UID: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
       },
-      hp: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+	  name: {
+		type: DataTypes.STRING,
+		allowNull: true,
+		validate: {
+		  len: [1, 140]
+		}
+	  },
+	  hp: {
+		type: DataTypes.INTEGER,
+		defaultValue: false
       },
       total_hp: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+          type: DataTypes.INTEGER,
+          allowNull: false
       },
       attack: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+          type: DataTypes.INTEGER,
+          allowNull: false
       },
       damage: {
         type: DataTypes.INTEGER,
