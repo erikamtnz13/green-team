@@ -335,7 +335,13 @@ $(document).ready(function($) {
             }
             $("#shopButton").hide();
     
-            var enemyAppearText = ('<div class="row"> <div id="playerInfo" class="col-md-4"><h2 id="playerAttack"></h2><h2 id="playerDamage"></h2></div> <div id="appearEnemy" class="col-md-4"></div> <div id="enemyInfo" class="col-md-4"><h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2></div></div>');
+            var enemyAppearText = ('<div class="row">' + 
+            '<div id="playerImg" class="col-md-3">' + 
+            '<h2 id=playerName></h2></div>' +
+            '<div id="playerInfo" class="col-md-3">' +
+            '<h2 id="playerAttack"></h2><h2 id="playerDamage"></h2></div>' +
+            '<div id="enemyInfo" class="col-md-3"><h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2></div></div>' +
+            '<div id="appearEnemy" class="col-md-3"></div>')
             $("#mainGameBox").append(enemyAppearText);
             $("#appearEnemy").append('<h3 id="killed"></h3>');
             $("#killed").hide();
