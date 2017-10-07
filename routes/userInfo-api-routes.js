@@ -25,21 +25,29 @@ module.exports = function(app) {
       res.json(dbUserInfo);
     });
   });
-
-  app.post("/api/users", function(req, res) {
-    db.UserInfo.create(req.body).then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+  app.get("/",function(req,res){
+    db.UserInfo.findAll({}).then(function(dbPlayer){
+      console.log(dbPlayer);
+      res.render("index", dbPlayer);
+    });
+    
+  });
+  app.post("/", function(req, res) {
+    console.log(req.body)
+    db.UserInfo.create(req.body).then(function(data) {
+      // res.json(data)
+      res.redirect("/");
     });
   });
 
-  app.delete("/api/users/:id", function(req, res) {
-    db.UserInfo.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function(dbUserInfo) {
-      res.json(dbUserInfo);
-    });
-  });
+  // app.delete("/api/users/:id", function(req, res) {
+  //   db.UserInfo.destroy({
+  //     where: {
+  //       id: req.params.id
+  //     }
+  //   }).then(function(dbUserInfo) {
+  //     res.json(dbUserInfo);
+  //   });
+  // });
 
 };
