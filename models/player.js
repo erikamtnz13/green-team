@@ -26,30 +26,40 @@ module.exports = function(sequelize, DataTypes) {
       damage: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    defense: {
+      },
+      defense: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    xp: {
+      },
+      xp: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    lvl: {
+      },
+      lvl: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    potions: {
+      },
+      potions: {
         type: DataTypes.INTEGER,
         allowNull: true
-    },
-    gold: {
+      },
+      gold: {
         type: DataTypes.INTEGER,
         allowNull: true
-    }
-      
+      }
+    },
+  {
+    timestamps: true
+  });
 
-	});
-	return player;
+  Player.associate = function(models){
+    Player.belongsTo(models.UserInfo, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+
+    
   };
-  
+    return Player;
+  };

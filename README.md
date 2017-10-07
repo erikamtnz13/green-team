@@ -117,7 +117,7 @@ Source https://github.com/erikamtnz13/green-team.git
 ## Green Team Members:
 - [Corey Rodems](https://github.com/coreyro "Corey Rodems") (Project Management/ Front-end / Game Logic / Handlebars)
 - [Steven Simone](https://github.com/theRealScoobaSteve "Steven Simone") (Front-end / Game Logic / Handlebars)
-- [Erika Martinez](https://github.com/erikamtnz13 "Erica Martinez") (Back-end / Player Data/ Routing)
+- [Erika Martinez](https://github.com/erikamtnz13 "Erika Martinez") (Back-end / Player Data/ Routing)
 - [Peter Surowski](https://github.com/PeterSurowski "Peter Surowski") (Back-end / User Login / Routing)
 ---
 
