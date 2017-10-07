@@ -12,6 +12,20 @@ var db = require("../models");
 // =============================================================
 module.exports = function(app) {
 
+  app.get("/scores",function(req,res){
+    db.UserInfo.findAll({}).then(function(dbPlayer){
+      console.log(dbPlayer);
+      res.render("scores", dbPlayer);
+    });
+    
+  });
+  app.get("/test",function(req,res){
+    db.UserInfo.findAll({}).then(function(dbPlayer){
+      console.log(dbPlayer);
+      res.render("index", dbPlayer);
+    });
+    
+  });
   // GET route for getting all of the posts
   app.get("/api/players", function(req, res) {
     var query = {};
@@ -74,5 +88,11 @@ module.exports = function(app) {
       }).then(function(dbPlayer) {
         res.json(dbPlayer);
       });
+  });
+  app.get("/api/scores", function(req, res) {
+    var query = {};
+    db.Player.findAll({}).then(function(dbPlayer) {
+      res.json(dbPlayer);
+    });
   });
 };

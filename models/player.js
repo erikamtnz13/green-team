@@ -1,11 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var Player = sequelize.define("Player", {
-      //I believe the IDs will be created automatically using sequelize
-      // player_UID: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false
-        
-      // },
       name: {
         type: DataTypes.STRING,
         allowNull: false

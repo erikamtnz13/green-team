@@ -9,7 +9,18 @@ body {
   clear: both;
 }
 
-a {
+
+#inputs {
+  align-items: center
+}
+
+h1 {
+  color: white
+}
+
+
+
+button {
   margin: 0;
   padding: 0;
   position: absolute;
@@ -28,7 +39,7 @@ a {
   z-index: 1
 }
 
-a:before {
+button:before {
 content: "";
 position: absolute;
 top: 0;
@@ -41,9 +52,9 @@ float: left;
 z-index: -1;
 }
 
-a:hover:before {
+button:hover:before {
   left: 0;
- 
+ color: white
 }
 
 span {
@@ -54,11 +65,7 @@ span {
 
 }
 
-a:hover span{
+button:hover span{
   color: #fff;
 
-}
-
-#inputs {
-  align-items: center
 }
