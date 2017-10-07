@@ -28,7 +28,7 @@ $(document).ready(function($) {
             {
                 //----------stats----------//
                 id: 1,
-                name: "Easy",
+                name: "Skeleton",
                 hp: 10,
                 total_hp: 10,
                 attack: 0,
@@ -46,7 +46,7 @@ $(document).ready(function($) {
             {
                 //----------stats----------//
                 id: 2,
-                name: "Medium",
+                name: "Crazed Rat",
                 hp: 14,
                 total_hp: 14,
                 attack: 0,
@@ -57,7 +57,7 @@ $(document).ready(function($) {
                 //----------misc----------//
                 img: "/img/rat.gif",
                 dmgImg: "",
-                killedImg: ""
+                killedImg: "/img/ratDead.png"
             },
     
             //===========New Enemy===========//
@@ -347,7 +347,7 @@ $(document).ready(function($) {
             $("#killed").hide();
             $("#mainGameBox").show();
             $("#playerImg").show()
-            $("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
+            $("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
             $("#playerName").html(player.name)
             $("#appearEnemy").append("<h2 id=enemyName>" + monster.name + "</h2>");
             $("#appearEnemy").append('<img class="center-block" id="eimg" class="img-fluid" src="' + monster.img + '" width="200" height="200">');
@@ -385,9 +385,11 @@ $(document).ready(function($) {
                 if (player.potions >= 1) {
                     if (player.hp <= healthMax) {
                         player.hp += 15;
+                        updatePlayer(player)
                     }
                     else {
                         player.hp = player.total_hp;
+                        updatePlayer(player)
                     }
     
                     player.potions = player.potions - 1;
@@ -540,14 +542,20 @@ $(document).ready(function($) {
                 var pDamage = player.damage + GetRandomInt(1, 8)
                 console.log("PDAMAGE: " + pDamage)
                 $("#playerDamage").show()
+                $("#playerImgs").replaceWith('<img src="' + player.char_attack + '" class="img-fluid" width="200" height="200" id="playerImgs">')
+                $("#eimg").replaceWith('<img src="' + player.char_spell + '" class="img-fluid" width="200" height="200" id="eimg">')
                 $("#playerDamage").replaceWith('<h4 id="playerDamage">You did ' + pDamage + ' damage to ' + monster.name + '!</h4>')
                 setTimeout(waitv, 1600)
     
                 function waitv() {
                     $("#playerDamage").hide(200)
+                    $("#playerImgs").replaceWith('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">')
+                    
+                    $("#eimg").replaceWith('<img src="' + monster.img + '" class="img-fluid" width="200" height="200" id="eimg">')
                 }
                 monster.hp -= pDamage
                 $("#enemyHpH3").replaceWith('<h4 id="enemyHpH3">' + monster.hp + " HP</h4>")
+                
     
             }
     
@@ -562,6 +570,8 @@ $(document).ready(function($) {
                 }
             }
             if (monster.hp >= 1) {
+
+                
     
                 console.log("MONSTER: " + monster + "\nPLAYER: " + player)
                 setTimeout(waitz, 1200)
@@ -583,6 +593,7 @@ $(document).ready(function($) {
                             $("#enemyDamage").hide(200)
                         }
                         player.hp -= eDamage
+                        updatePlayer(player)
                         console.log("player hp: " + player.hp)
                         $("#playerHPh3").replaceWith('<h3 id="playerHPh3">' + player.hp + " HP</h3>")
                         if (player.hp < 1) {
@@ -624,7 +635,7 @@ $(document).ready(function($) {
                 $("#combatBtnDiv").hide()
                 $("#enemyName").hide()
                 $("#enemyHpH3").replaceWith('<h3 id="enemyHpH3">' + "0 HP</h3>")
-                $("#eimg").replaceWith('<img class="center-block" id="eimg" src="' + monster.killedImg + '" width="150" height="150">')
+                $("#eimg").replaceWith('<img class="center-block" id="eimg" src="' + monster.killedImg + '" width="200" height="200">')
                 $("#killed").show()
                 $("#killed").html("You've killed " + monster.name + "!")
                 setTimeout(waitk, 1800)

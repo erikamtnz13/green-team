@@ -82,6 +82,10 @@ module.exports = function(sequelize, DataTypes) {
       char_attack: {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      char_spell: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
   {

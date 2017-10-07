@@ -36,7 +36,7 @@ module.exports = function(app) {
     console.log(req.body)
     db.UserInfo.create(req.body).then(function(data) {
       // res.json(data)
-      res.redirect("/");
+      res.redirect("/characters.html");
     });
   });
 
