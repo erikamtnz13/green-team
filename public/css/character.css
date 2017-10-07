@@ -1,0 +1,66 @@
+/* @media only screen and (max-width: 1080px) {  */
+    body{
+        background-image: url("./public/imgs/bg1.jpg");
+    }
+
+    #wrapper{
+        background-color: black;
+    }
+
+    #header{
+        padding-top: 150px;
+        height: 200px;
+    }
+
+    #character-select{
+        padding-top: 100px;
+        height: 600px;
+    }
+
+    #font{
+        font-family: 'Nosifer', cursive;
+        color: white;   
+        text-shadow: -1px 0 red, 0 2px red, 1px 0 red, 0 -1px red; 
+    }
+
+    #select{
+        padding-bottom: 50px;
+        padding-left: 125px;
+    }
+
+    #confirm{
+        height: 75px;
+        width: 125px;
+    }
+/* } */
+
+@media only screen and (max-width: 768px) {
+
+    .torch{
+        height: 200px;
+        width: 200px;
+    }
+
+    #header{
+        height: 200px;
+        padding-top: 50px;
+    }
+    
+    #character-select{
+        height: 400px;
+    }
+    
+    #wrapper{
+        width: 80%;
+    }
+
+    #select{
+        padding-bottom: 50px;
+        padding-left: 20px;  
+    }
+
+    #confirm{
+        height: 50px;
+        width: 115px;
+    }
+}
