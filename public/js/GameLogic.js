@@ -10,10 +10,9 @@ $(document).ready(function($) {
             $("#mainGameBox").show()
             $("#lvlUpBtn").hide()
             $("#foundEnemy").hide()
-            // while(1)
-            // {
+{
             GenerateScenario(player)
-            // }
+ 
     
         }
         $("#storeDiv").hide()
