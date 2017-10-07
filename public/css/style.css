@@ -20,6 +20,10 @@ h1, h2, h3, h4{
 	
 
 }
+#avatar{
+	width: 100%;
+	height: 100%;
+}
 h4{
 	font-size:10pt !important;
 }
@@ -100,6 +104,13 @@ h2{
 	padding: 8px;
 	margin: 20px 0 20px 0;
 }
+#playerHPh3{
+	color: #3d0 !important;
+    border: 2px #2b0 solid;
+    padding: 8px;
+	text-align: center;
+	margin: 20px 0 20px 0;
+}
 
 #playerHPdamaged{
 	color:#f00 !important;
@@ -109,6 +120,7 @@ h2{
 	font-size: 18pt;
 
 }
+
 
  #enemyHpH3damaged{
  	color:#fff !important;

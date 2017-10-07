@@ -66,6 +66,7 @@
 				<div class="container">
 					<div class="row">
 					<div class="col-md-12" id="mainGameBox">
+
 						<img src="/img/maw.jpg" id="startImage" class="center-block img-fluid">
 						<p class="startText"> You find yourself at the entrance to a dark and dangerous dungeon. A cool stale breeze carries echos of screams and laughter from deep within to the mouth of the dungeon.</p>
 						<div class="row">
@@ -75,16 +76,19 @@
 							</div>
 							<div class="col-md-2"></div>
 						</div>
-							<div class="row">
-								
-								<div class="col-md-6">
-									<button id="enterDunBtn" class="btn btn-default btn-lg d-block mx-auto text-center">YES</button>
+							
+									
+								<div class="row">
+									<div class="col-md-6">
+										<button id="enterDunBtn" class="btn btn-default btn-lg d-block mx-auto text-center">YES</button>
+									</div>
+									<div class="col-md-6">
+										<button id="quitDunBtn" class="btn btn-default btn-lg d-block mx-auto text-center">NO</button>
+									</div>
 								</div>
-								<div class="col-md-6">
-									<button id="quitDunBtn" class="btn btn-default btn-lg d-block mx-auto text-center">NO</button>
-								</div>
-								
 							</div>
+								
+							
 
 						</div>
 					</div>
@@ -101,7 +105,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row errorRow">
 		<div class="container jumbotron">
 			<div class="col-md-12 errorDiv">
 
@@ -158,7 +162,7 @@
 
 						<div class="col-md-4">
 							<h3 id="hpPotionsh3"></h3>
-							<button type="button" id="potionButton" class="btn btn-success d-inline-block float-right">Heal</button>
+							<button type="button" id="ptnBtn" class="potionButton btn btn-success d-inline-block float-right">Heal</button>
 
 							<br>
 							<h3 id="goldh3"></h3>
