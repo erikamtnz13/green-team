@@ -18,25 +18,25 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 ### To Do
 - [ ] Github -
     - [x] readme
-    - [ ] create branches  
+    - [x] create branches  
 - [ ] Backend - 
-    - [ ] models
-    - [ ] db config
+    - [x] models
+    - [x] db config
     - [ ] login and auth
-    - [ ] routes
+    - [x] routes
     - [ ] tests
 - [ ] Frontend - 
     - [x] initial main.handlebars layout
-    - [ ] initial index.handlebars layout
+    - [x] initial index.handlebars layout
     - [ ] choose grahpics/sound fx
-    - [ ] design HUD/UI
+    - [x] design HUD/UI
     - [ ] Implement w/ handlebars
 - [ ] Logic - 
-    - [ ] Room navigation w/ items
-    - [ ] enemy spawns
-    - [ ] combat/xp
-    - [ ] lvl up/stats
-    - [ ] store
+    - [x] Room navigation w/ items
+    - [x] enemy spawns
+    - [x] combat/xp
+    - [x] lvl up/stats
+    - [x] store
     - [ ] pvp
 - [ ] Presentation
     - [ ] Slides/Demo
