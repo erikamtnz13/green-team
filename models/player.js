@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      exp: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
       lvl: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -46,11 +50,45 @@ module.exports = function(sequelize, DataTypes) {
       gold: {
         type: DataTypes.INTEGER,
         allowNull: true
+      },
+      defGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      dmgGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      accuGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      potionGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      enemiesKilled: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      char_img: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      char_idle: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      char_attack: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
   {
     timestamps: true
   });
+
+
 
   Player.associate = function(models){
     Player.belongsTo(models.UserInfo, {

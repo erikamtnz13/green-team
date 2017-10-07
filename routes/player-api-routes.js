@@ -31,8 +31,7 @@ module.exports = function(app) {
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Author
     db.Player.findAll({
-      where: query,
-      include: [db.UserInfo]
+      where: query
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
     });
@@ -46,11 +45,10 @@ module.exports = function(app) {
     db.Player.findOne({
       where: {
         id: req.params.id
-      },
-      include: [db.UserInfo]
+      }
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
-    });
+     });
   });
 
   // POST route for saving a new post
@@ -72,12 +70,12 @@ module.exports = function(app) {
   });
 
   // PUT route for updating posts
-  app.put("/api/players", function(req, res) {
+  app.put("/api/players/:id", function(req, res) {
     db.Player.update(
       req.body,
       {
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       }).then(function(dbPlayer) {
         res.json(dbPlayer);

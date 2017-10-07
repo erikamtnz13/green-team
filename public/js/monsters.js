@@ -1,75 +1,105 @@
-	//***********************************************************************
-	//enemies
-	var creature = {
-		id:0,
-		name:"creature",
-		eimg:'scr="http://via.placeholder.com/150x150"',
-		ekilledImg:'<img class="center-block" id="eimg" src="assets/img/warriorDead.gif" width="150" height="150">',
+//***********************************************************************
+//enemies
+var enemies = [
+//===========New Enemy===========//
+	{
+		//----------stats----------//
+		id: 1,
+		name: "Easy",
+		hp: 10,
+		attack: 0,
+		damage: 0,
+		defense: 1,
+		items: ['gold','potion'],
+		xp: +5,
+		//----------misc----------//
+		img: "",
+		dmgImg: "",
+		killedImg: ""
+	},
 
-		ehp:8,
-		eitems:[""],
-		eattack:0,
-		edamage: 0,
-		edefense:8,
-		xp:+3,
-	}
+	//===========New Enemy===========//
+	{
+		//----------stats----------//
+		id: 2,
+		name: "Medium",
+		hp: 14,
+		attack: 0,
+		damage: 1,
+		defense: 3,
+		items: ['gold','potion'],
+		xp: +10,
+		//----------misc----------//
+		img: "",
+		dmgImg: "",
+		killedImg: ""
+	},
 
+	//===========New Enemy===========//
+	{
+		//----------stats----------//
+		id: 3,
+		name: "Hard",
+		hp: 18,
+		attack: 0,
+		damage: 6,
+		defense: 5,
+		items: ['gold','potion'],
+		xp: +25,
+		//----------misc----------//
+		img: "",
+		dmgImg: "",
+		killedImg: ""
+	},
 
-	var skeleton = {
-		id:1,
-		name:"Weak Skeleton",
-		eimg:'assets/img/skel.gif',
-		ekilledImg:'assets/img/skelDead.png',
+	//===========New Enemy===========//
+	{
+		//----------stats----------//
+		id: 4,
+		name: "Very Hard",
+		hp: 35,
+		attack: 0,
+		damage: 10,
+		defense: 7,
+		items: ['gold','potion'],
+		xp: +50,
+		//----------misc----------//
+		img: "",
+		dmgImg: "",
+		killedImg: ""
+	},
 
-		ehp:10,
-		eitems:[""],
-		eattack:0,
-		edamage:0,
-		edefense:1,
-		xp:+5,
-	}
+	//===========New Enemy===========//
+	{
+		//----------stats----------//
+		id: 5,
+		name: "Extremely Hard",
+		hp: 50,
+		attack: 0,
+		damage: 20,
+		defense: 9,
+		items: ['gold','potion'],
+		xp: +100,
+		//----------misc----------//
+		img: "",
+		dmgImg: "",
+		killedImg: ""
+	},
 
-	var rat = {
-		id:2,
-		name:"Large Rat",
-		eimg:'assets/img/rat.gif',
-		ekilledImg:'assets/img/ratDead.png',
+];
 
-		ehp:14,
-		eitems:[""],
-		eattack:0,
-		edamage:1,
-		edefense:3,
-		xp:+10,
-	}
+module.exports = enemies;
 
-	var thief = {
-		id:3,
-		name:"Dungeon Keeper",
-		eimg:'assets/img/warrior.gif',
-		ekilledImg:'assets/img/warriorDead.png',
-		edmgImg:'assets/img/warriorDmg.gif',
-		ehp:18,
-		eitems:[""],
-		eattack:0,
-		edamage:6,
-		edefense:5,
-		xp:+25,
-	}
-
-	var demonLord = {
-		id:4,
-		name:"Demon Lord",
-		eimg:'assets/img/demon.gif',
-		ekilledImg:'assets/img/demonDead.png',
-
-		ehp:35,
-		eitems:[""],
-		eattack:0,
-		edamage:10,
-		edefense:8,
-		xp:+50,
-	}
-    var enemiesArray = [creature, skeleton, rat, thief, demonLord];
-    
-    module.exports = enemiesArray;
+// var createEnemy = function(enemies,name,hp,attack,damage,defense,items,xp,img,dmgImg,killedImg){
+//     this.id = enemies.length  1 ;
+//     this.name = name;
+//     this.hp = hp;
+//     this.attack = attack;
+//     this.damage = damage;
+//     this.defense = defense;
+//     this.items = items;
+//     this.xp = (enemies[enemies.length - 1].xp) * 2;
+//     this.img = img;
+//     this.dmgImg = dmgImg;
+//     this.killedImg = killedImg; 
+// }
