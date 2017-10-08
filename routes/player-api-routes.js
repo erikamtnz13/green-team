@@ -19,18 +19,19 @@ module.exports = function(app) {
     });
     
   });
-  app.get("/playerselect",function(req,res){
+  app.get("/characters",function(req,res){
     db.Player.findAll({}).then(function(dbPlayer){
       console.log(dbPlayer);
-      res.render("select", dbPlayer);
+      res.render("character", dbPlayer);
     });
     
   });
-  app.post("/playerselect", function(req, res) {
+  app.post("/characters", function(req, res) {
     console.log(req.body)
+    // req.body.UserInfoId = 3;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
-      res.redirect("/playerselect");
+      res.redirect("/game");
     });
   });
 
@@ -46,7 +47,7 @@ module.exports = function(app) {
     // In this case, just db.Author
     db.Player.findAll({
       where: query,
-      include: [db.UserInfo]
+      include: [db.UserInfo.id]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
     });
@@ -61,7 +62,7 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       },
-      include: [db.UserInfo]
+      include: [db.UserInfo.id]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
     });

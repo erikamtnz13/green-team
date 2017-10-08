@@ -50,15 +50,25 @@ module.exports = function(sequelize, DataTypes) {
     },
   {
     timestamps: true
-  });
-  Player.associate = function(models){
-    Player.belongsTo(models.UserInfo, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+  }
+// );
+  // Player.associate = function(models){
+  //   Player.belongsTo(models.UserInfo, {
+  //     foreignKey: {
+  //       //name: 'UserInfoId',
+  //       allowNull: false
+  //     }
+  //   });
 
     
-  };
+  // };
+
+  , {
+    classMethods: {
+      associate: function(models) {
+        Player.hasMany(models.UserInfo, {foreignKey: 'UserInfoId'});
+      }
+    }
+  });
     return Player;
   };
