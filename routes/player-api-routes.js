@@ -22,7 +22,7 @@ module.exports = function(app) {
   app.get("/characters",function(req,res){
     db.Player.findAll({}).then(function(dbPlayer){
       console.log(dbPlayer);
-      res.render("character", dbPlayer);
+      res.render("characters", dbPlayer);
     });
     
   });

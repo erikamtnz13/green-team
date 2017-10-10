@@ -39,7 +39,7 @@ content: "";
 position: absolute;
 top: 0;
 left: -100%;
-width: 90%;
+width: 100%;
 height: 100%;
 /* background: #161616; */
 transition: .20s ease-in-out;
