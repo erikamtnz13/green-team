@@ -39,6 +39,8 @@ module.exports = function(app) {
     //req.body.UserInfo = 3;
     db.UserInfo.create(req.body).then(function(data) {
       // res.json(data)
+      // window.location = data;
+      // console.log(data);
       res.redirect("/characters");
     });
   });

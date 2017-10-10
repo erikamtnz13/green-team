@@ -31,6 +31,7 @@ module.exports = function(app) {
     // req.body.UserInfoId = 3;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
+      // window.location = data;
       res.redirect("/game");
     });
   });
