@@ -1,6 +1,8 @@
 $(document).ready(function($)
-{
+{   
+
     $(".msgRow").hide()
+    $("#msgDiv").hide()
     $("#storeDiv").hide()
 	$("#shopButton").show()
 	$("#hudRow").hide()
@@ -16,7 +18,8 @@ $(document).ready(function($)
 //================================================================================//
 	function Main(player)
 	{
-		updatePlayer(player)
+        updatePlayer(player)
+        $("#headRow").show()
 		$("#storeDiv").hide()
 		$("#shopButton").show()
 		$("#mainGameBox").empty()
@@ -295,9 +298,10 @@ var getPlayerData = function(UID)
 //================================================================================//
 //Player level up function
 //================================================================================//
-	var lvlUp = (playObj) =>
-	{
-		var player = playObj
+	var lvlUp = (player) =>
+	{   
+        $("#msgDiv").html("YOU'VE LEVELED UP!")
+
 		console.log("playerxp " + player.xp);
 		if (player.xp <= 75)
 		{
@@ -305,9 +309,8 @@ var getPlayerData = function(UID)
 			{
 				player.lvl += 1;
 				player.total_hp += 5;
-				player.hp = player.total_hp;
-				// alert("You've leveled up");
-				player.gold += 75;
+                player.hp = player.total_hp;
+                player.gold += 75;
 				$("#goldh3").html("Gold: " + player.gold);
 				player.exp = 0;
 				console.log("exp " + player.exp);
@@ -323,9 +326,13 @@ var getPlayerData = function(UID)
 					function waitm()
 					{
 						getPlayerData(playerUID).then(function(player)
-						{
-							console.log("PLAYERAFTER: " + JSON.stringify(player))
-							Main(player);
+                        {   
+                            
+                                $("#msgDiv").empty()
+                                $("#msgDiv").removeClass("alert alert-success")
+                                $(".msgRow").hide(200)
+                                Main(player);
+                        							
 						})
 					}
 				}
@@ -353,16 +360,16 @@ var getPlayerData = function(UID)
 				function up()
 				{
 					updatePlayer(player)
-					setTimeout(waitm, 600);
 
-					function waitm()
-					{
+					
 						getPlayerData(playerUID).then(function(player)
-						{
-							console.log("PLAYERAFTER: " + JSON.stringify(player))
+						{   
+                            $("#msgDiv").empty()
+                            $("#msgDiv").removeClass("alert alert-success")
+							$(".msgRow").hide(200)
 							Main(player);
 						})
-					}
+					
 				}
 			}
 			else
@@ -379,67 +386,6 @@ var getPlayerData = function(UID)
 	var GetRandomInt = (min, max) =>
 	{
 		return Math.floor(Math.random() * (max - min + 1)) + min
-    }
-    
-//================================================================================//
-//Generates a monster from the array for the player to fight
-//================================================================================//
-	var GenerateMonster = (player) =>
-	{
-		let randNum = GetRandomInt(0, 4)
-		if (player.xp <= 50)
-		{
-			var monster = monsters[GetRandomInt(0, 1)];
-		}
-		else if (player.xp >= 50)
-		{
-			var monster = monsters[GetRandomInt(1, 3)];
-		}
-		else if (player.xp >= 80)
-		{
-			var monster = monsters[GetRandomInt(3, 6)];
-        }
-        
-        //====================
-        //HTML WORK FOR COMBAT
-        //====================
-
-		$("#shopButton").hide();
-		$("")
-		var enemyAppearText = ('<div class="row"><div id="playerImg" class="col-md-6"><h2 id=playerName></h2></div>' +
-			'<div id="appearEnemy" class="col-md-6"></div></div>')
-		var attackRow = (
-			'<div class="row">' +
-			'<div class="col-md-12 id="attackRow">' +
-			'<h2 id="playerAttack"></h2><h2 id="playerDamage"></h2>' + '<h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2>' +
-			'</div></div>')
-		$("#playerHP").hide()
-		$("#attackRow").show();
-		$("#mainGameBox").append(enemyAppearText);
-		$("#appearEnemy").append('<h3 id="killed"></h3>');
-		$("#killed").hide();
-		$("#mainGameBox").show();
-		$("#playerImg").show()
-		$("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
-		$("#playerName").html(player.name)
-		$("#appearEnemy").append("<h2 id=enemyName>" + monster.name + "</h2>");
-		$("#appearEnemy").append('<img class="center-block" id="eimg" class="img-fluid" src="' + monster.img + '" width="200" height="200">');
-		$("#appearEnemy").append('<h3 id="enemyHpH3">' + monster.hp + ' HP</h3>');
-		$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="attackBtn" class="center-block btn btn-danger">Attack!</button></div><div class="col-md-4"></div></div>');
-		$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="waitAttackBtn" class="center-block btn btn">Wait...</button></div><div class="col-md-4"></div></div>');
-		$("#waitAttackBtn").hide();
-		console.log("Test enemy HP: " + monster.hp);
-		$("#eimg").show();
-		$("#enemyInfo").show();
-		$("#playerAttack").show();
-		$("#playerDamage").show();
-		$("#enemyDamage").show();
-		$("#enemyAttack").show();
-		$("#mainGameBox").append(attackRow)
-		$("#attackBtn").on("click", () =>
-		{
-			combat(monster, player);
-		});
     }
     
 //================================================================================//
@@ -479,14 +425,7 @@ var getPlayerData = function(UID)
 				player.potions = player.potions - 1;
 				$("#hpPotionsh3").replaceWith('<h3 id="hpPotionsh3">Potions: ' + player.potions + '</h3>');
 				$("#playerHPh3").replaceWith('<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
-				if (!monster.hp)
-				{
-					$("#playerHP").replaceWith('<h2 id="playerHP">' + player.hp + " HP</h2>");
-				}
-				console.log("potions " + player.potions);
-				console.log("healthMax " + healthMax);
-				console.log("player.total_hp " + player.total_hp);
-				console.log("player.hp " + player.hp);
+
 			}
 			else
 			{
@@ -629,6 +568,71 @@ var getPlayerData = function(UID)
 		return scenario
     }
     
+
+    
+//================================================================================//
+//Generates a monster from the array for the player to fight
+//================================================================================//
+	var GenerateMonster = (player) =>
+	{
+		let randNum = GetRandomInt(0, 4)
+		if (player.xp <= 50)
+		{
+			var monster = monsters[GetRandomInt(0, 1)];
+		}
+		else if (player.xp >= 50)
+		{
+			var monster = monsters[GetRandomInt(1, 3)];
+		}
+		else if (player.xp >= 80)
+		{
+			var monster = monsters[GetRandomInt(3, 6)];
+        }
+        
+        //====================
+        //HTML WORK FOR COMBAT
+        //====================
+
+		
+		var enemyAppearText = ('<div class="row"><div id="playerImg" class="col-md-6"><h2 id=playerName></h2></div>' +
+			'<div id="appearEnemy" class="col-md-6"></div></div>')
+		var attackRow = (
+			'<div class="row">' +
+			'<div class="col-md-12 id="attackRow">' +
+			'<h2 id="playerAttack"></h2><h2 id="playerDamage"></h2>' + '<h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2>' +
+			'</div></div>')
+		$("#playerHP").hide()
+		$("#attackRow").show();
+		$("#mainGameBox").append(enemyAppearText);
+		$("#appearEnemy").append('<h3 id="killed"></h3>');
+		$("#killed").hide();
+		$("#mainGameBox").show();
+		$("#playerImg").show()
+		$("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
+		$("#playerName").html(player.name)
+		$("#appearEnemy").append("<h2 id=enemyName>" + monster.name + "</h2>");
+		$("#appearEnemy").append('<img class="center-block" id="eimg" class="img-fluid" src="' + monster.img + '" width="200" height="200">');
+		$("#appearEnemy").append('<h3 id="enemyHpH3">' + monster.hp + ' HP</h3>');
+		$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="attackBtn" class="center-block btn btn-danger">Attack!</button></div><div class="col-md-4"></div></div>');
+		$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="waitAttackBtn" class="center-block btn btn">Wait...</button></div><div class="col-md-4"></div></div>');
+		$("#waitAttackBtn").hide();
+		console.log("Test enemy HP: " + monster.hp);
+		$("#eimg").show();
+		$("#enemyInfo").show();
+		$("#playerAttack").show();
+		$("#playerDamage").show();
+		$("#enemyDamage").show();
+		$("#enemyAttack").show();
+        $("#mainGameBox").append(attackRow)
+        $("#shopButton").hide();
+        $("#eimg").show();
+		$("#attackBtn").on("click", () =>
+		{
+			combat(monster, player);
+		});
+    }
+    
+
 //================================================================================//
 //After combat messages and functions
 //================================================================================//
@@ -648,11 +652,10 @@ var getPlayerData = function(UID)
 		player.enemiesKilled += 1
 		player.xp += giveXP
 		player.exp += giveXP
-		setTimeout(waita, 1600)
+		setTimeout(waita, 1000)
 
 		function waita()
 		{
-			$("#monsterKilled").empty()
 			$("#monsterKilled").append("<h3 class='mx-auto d-block text-center'>You gained " + giveXP + " XP!</h3>")
 			$("#xph3").html("XP: " + player.xp)
 			$("#enemiesKilledh3").html("Killed: " + player.enemiesKilled)
@@ -672,12 +675,16 @@ var getPlayerData = function(UID)
 				console.log("HP now?: " + monster.hp);
 			}
 			if (player.xp <= 75)
-			{
+			{   
 				console.log("if")
 				if (player.exp >= 25)
 				{
-					setTimeout(waitlv, 10)
-					let message = $('<div class="alert alert-success">You can level up!</div>')
+                    $("#headRow").hide(300)
+                    $(".msgRow").show()
+                    $("#msgDiv").show(200)
+                    $("#msgDiv").addClass("alert alert-success")
+                    $("#msgDiv").html("You can level up! Click the level up button!")
+
 					regen(monster)
 					$("#lvlUpBtn").show()
 					$("#mainGameBox").hide()
@@ -713,13 +720,12 @@ var getPlayerData = function(UID)
 			else
 			{
 				if (player.exp >= 75)
-				{
-					setTimeout(waitlv, 10)
-
-					function waitlv()
-					{
-						alert("You can level up!")
-					}
+                {   
+                    $("#headRow").hide(300)
+                    $(".msgRow").show()
+                    $("#msgDiv").show(200)
+                    $("#msgDiv").addClass("alert alert-success")
+                    $("#msgDiv").html("You can level up! Click the level up button!")
 					regen(monster)
 					$("#lvlUpBtn").show()
 					$("#mainGameBox").hide()
@@ -790,7 +796,7 @@ var getPlayerData = function(UID)
 				$("#eimg").replaceWith('<img src="' + monster.img + '" class="img-fluid" width="200" height="200" id="eimg">')
 			}
 			monster.hp -= pDamage
-			$("#enemyHpH3").replaceWith('<h4 id="enemyHpH3">' + monster.hp + " HP</h4>")
+			$("#enemyHpH3").replaceWith('<h3 id="enemyHpH3">' + monster.hp + " HP</h3>")
 		}
 		else
 		{
