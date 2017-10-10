@@ -1,25 +1,48 @@
-$(document).ready(function($)
-{   
+//================================================================================//
+//Game logic for Dungeon Crusade
+//Written by Corey Rodems & Stephen Simone (Front End Team) 2017
+//Turn Based Dungeon Crawler
+//================================================================================//
 
-    $(".msgRow").hide()
-    $("#msgDiv").hide()
-    $("#storeDiv").hide()
+$(document).ready(function($)
+{
+    
+	var encounter = false;
+	var findPath = false;
+	$(".msgRow").hide()
+	$("#msgDiv").hide()
+	$("#storeDiv").hide()
 	$("#shopButton").show()
 	$("#hudRow").hide()
 	$("#mainGameBox").show()
 	$("#lvlUpBtn").hide()
-    $("#foundEnemy").hide()
+	$("#foundEnemy").hide()
 	localStorage.UID = 1;
-	const playerUID = localStorage.getItem("UID");
+    const playerUID = localStorage.getItem("UID");
+    
+
+    //================================================================================//
+    //Animate.css
+    //================================================================================//
+    $.fn.extend({
+        animateCss: function (animationName) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            this.addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+            });
+            return this;
+        }
+    });
 
 
-//================================================================================//
-//Main Loop function
-//================================================================================//
+
+	//================================================================================//
+	//Main Loop function
+	//================================================================================//
 	function Main(player)
 	{
-        updatePlayer(player)
-        $("#headRow").show()
+		updatePlayer(player)
+		$("#headRow").show()
 		$("#storeDiv").hide()
 		$("#shopButton").show()
 		$("#mainGameBox").empty()
@@ -30,19 +53,22 @@ $(document).ready(function($)
     }
     
 
-//================================================================================//
-//Initial HTML Setup
-//================================================================================//
+
+	//================================================================================//
+	//Initial HTML Setup
+	//================================================================================//
 	$("#storeDiv").hide()
 	$("#shopButton").show()
 	$("#hudRow").hide()
 	$("#mainGameBox").show()
 	$("#lvlUpBtn").hide()
-	$("#foundEnemy").hide()
+    $("#foundEnemy").hide()
+    
 
-//================================================================================//
-//MONSTERS ARRAY
-//================================================================================//
+
+	//================================================================================//
+	//MONSTERS ARRAY
+	//================================================================================//
 	var monsters = [
 		//===========New Enemy===========//
 		{
@@ -131,42 +157,120 @@ $(document).ready(function($)
 		},
     ];
     
-//================================================================================//
-//Items array (just gold and potions for the time being)
-//================================================================================//
-	var Item = [
-		'gold', 'potion'
-	]
 
-//================================================================================//
-//Gets the current player object in the database
-//================================================================================//
-var getPlayerData = function(UID)
-{
-    return new Promise(function(res, rej)
+
+	//================================================================================//
+	//Shop Button Function
+	//================================================================================//
+	var shopFunc = (player) =>
+	{
+		console.log("Open Store");
+		$("#storeDiv").show();
+		$("#sharpen").show();
+		$("#shield").show();
+		$("#accu").show();
+		$("#shopButton").hide();
+		$("#done").show();
+		$("#defBtnTxt").text(player.defGoldNeed + " gold");
+		$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+		$("#accBtnTxt").text(player.accuGoldNeed + " gold");
+		$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+    }
+    
+
+
+	//================================================================================//
+	//Hides Shop
+	//================================================================================//
+	var hideShop = () =>
+	{
+		$("#done").hide();
+		$("#shopButton").show();
+		setTimeout(closeShop, 1)
+
+		function closeShop()
+		{
+			$("#storeDiv").hide();
+			$("#shopButton").show();
+			$("")
+		}
+    }
+    
+    var notEnough = () =>
     {
-        $.get("/api/players/" + UID, function(player)
+        $(".msgRow").show()
+        $("#msgDiv").html('<h2 id="thisAlert" class="alert alert-danger">Not enough gold!</h2>')
+        setTimeout (wait,1800)
+        function wait()
         {
-            console.log("PLAYER: " + JSON.stringify(player))
-            $("#potionBtnTxt").text(player.gold + " gold")
-            $("#dmgStat").text(player.damage + "/15")
-            $("#defStat").text(player.defense + "/10")
-            $("#accuStat").text(player.attack + "/10")
-            $("#playerHP").html(player.hp + " HP")
-            $("#playerLevel").html("Player Level: " + player.lvl)
-            $("#goldh3").html("Gold: " + player.gold)
-            $("#hpPotionsh3").html("Potions: " + player.potions)
-            $("#xph3").html("XP: " + player.xp)
-            $("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
-            res(player)
-        });
-    })
-}
+            $("thisAlert").remove()
+            $(".msgRow").hide(200)
+        }
+    }
+
+	//================================================================================//
+	//Buy potion button
+	//================================================================================//
+	var buyPotion = (player) =>
+	{
+		if (player.potions <= 10)
+		{
+			if (player.gold >= player.potionGoldNeed)
+			{
+				console.log("potionbuy");
+				player.potions += 1;
+				player.gold -= player.potionGoldNeed;
+				$("#goldh3").html("Gold: " + player.gold);
+				player.potionGoldNeed += 10;
+				$("#hpPotionsh3").html('Potions: ' + player.potions);
+				$("#defBtnTxt").text(player.defGoldNeed + " gold");
+				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
+				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
+				$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+			}
+			else
+			{
+                notEnough()
+			}
+		}
+		else
+		{
+			alert("You have too many potions!");
+		}
+    }
+    
 
 
-//================================================================================//
-//Calls the database and updates the player object
-//================================================================================//
+	//================================================================================//
+	//Gets the current player object in the database
+	//================================================================================//
+	var getPlayerData = function(UID)
+	{
+		return new Promise(function(res, rej)
+		{
+			$.get("/api/players/" + UID, function(player)
+			{
+				console.log("PLAYER: " + JSON.stringify(player))
+				$("#potionBtnTxt").text(player.gold + " gold")
+				$("#dmgStat").text(player.damage + "/15")
+				$("#defStat").text(player.defense + "/10")
+				$("#accuStat").text(player.attack + "/10")
+				$("#playerHP").html(player.hp + " HP")
+				$("#playerLevel").html("Player Level: " + player.lvl)
+				$("#goldh3").html("Gold: " + player.gold)
+				$("#hpPotionsh3").html("Potions: " + player.potions)
+				$("#xph3").html("XP: " + player.xp)
+				$("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
+				res(player)
+			});
+		})
+    }
+    
+
+
+	//================================================================================//
+	//Calls the database and updates the player object
+	//================================================================================//
 	var updatePlayer = function(player)
 	{
 		console.log("UPDATEPLAYER: " + JSON.stringify(player))
@@ -199,9 +303,11 @@ var getPlayerData = function(UID)
 		})
     }
     
-//================================================================================//
-//Damage stat button function
-//================================================================================//
+
+
+	//================================================================================//
+	//Damage stat button function
+	//================================================================================//
 	var dmgButton = (player) =>
 	{
 		if (player.damage <= 15)
@@ -222,7 +328,7 @@ var getPlayerData = function(UID)
 			}
 			else
 			{
-				alert("not enough gold!");
+				notEnough()
 			}
 		}
 		else
@@ -231,9 +337,11 @@ var getPlayerData = function(UID)
 		}
     }
     
-//================================================================================//
-//Defense stat button function
-//================================================================================//
+
+
+	//================================================================================//
+	//Defense stat button function
+	//================================================================================//
 	var defButton = (player) =>
 	{
 		if (player.defense <= 15)
@@ -254,7 +362,7 @@ var getPlayerData = function(UID)
 			}
 			else
 			{
-				alert("not enough gold!");
+				notEnough()
 			}
 		}
 		else
@@ -263,9 +371,11 @@ var getPlayerData = function(UID)
 		}
     }
     
-//================================================================================//
-//Attack(Accuracy) stat button function
-//================================================================================//
+
+
+	//================================================================================//
+	//Attack(Accuracy) stat button function
+	//================================================================================//
 	var accuButton = (player) =>
 	{
 		if (player.attack <= 15)
@@ -286,7 +396,7 @@ var getPlayerData = function(UID)
 			}
 			else
 			{
-				alert("not enough gold!");
+				notEnough()
 			}
 		}
 		else
@@ -295,13 +405,14 @@ var getPlayerData = function(UID)
 		}
     }
     
-//================================================================================//
-//Player level up function
-//================================================================================//
-	var lvlUp = (player) =>
-	{   
-        $("#msgDiv").html("YOU'VE LEVELED UP!")
 
+
+	//================================================================================//
+	//Player level up function
+	//================================================================================//
+	var lvlUp = (player) =>
+	{
+		$("#msgDiv").html("YOU'VE LEVELED UP!")
 		console.log("playerxp " + player.xp);
 		if (player.xp <= 75)
 		{
@@ -309,8 +420,8 @@ var getPlayerData = function(UID)
 			{
 				player.lvl += 1;
 				player.total_hp += 5;
-                player.hp = player.total_hp;
-                player.gold += 75;
+				player.hp = player.total_hp;
+				player.gold += 75;
 				$("#goldh3").html("Gold: " + player.gold);
 				player.exp = 0;
 				console.log("exp " + player.exp);
@@ -326,13 +437,11 @@ var getPlayerData = function(UID)
 					function waitm()
 					{
 						getPlayerData(playerUID).then(function(player)
-                        {   
-                            
-                                $("#msgDiv").empty()
-                                $("#msgDiv").removeClass("alert alert-success")
-                                $(".msgRow").hide(200)
-                                Main(player);
-                        							
+						{
+							$("#msgDiv").empty()
+							$("#msgDiv").removeClass("alert alert-success")
+							$(".msgRow").hide(200)
+							Main(player);
 						})
 					}
 				}
@@ -360,16 +469,13 @@ var getPlayerData = function(UID)
 				function up()
 				{
 					updatePlayer(player)
-
-					
-						getPlayerData(playerUID).then(function(player)
-						{   
-                            $("#msgDiv").empty()
-                            $("#msgDiv").removeClass("alert alert-success")
-							$(".msgRow").hide(200)
-							Main(player);
-						})
-					
+					getPlayerData(playerUID).then(function(player)
+					{
+						$("#msgDiv").empty()
+						$("#msgDiv").removeClass("alert alert-success")
+						$(".msgRow").hide(200)
+						Main(player);
+					})
 				}
 			}
 			else
@@ -379,28 +485,21 @@ var getPlayerData = function(UID)
 		}
     }
     
-    
-//================================================================================//
-//Random Roll
-//================================================================================//
+
+
+	//================================================================================//
+	//Random Roll
+	//================================================================================//
 	var GetRandomInt = (min, max) =>
 	{
 		return Math.floor(Math.random() * (max - min + 1)) + min
     }
     
-//================================================================================//
-//Generates an item from the Item array
-//================================================================================//
-	var GenerateItem = () =>
-	{
-		let randNum = GetRandomInt(0, 1)
-		let item = Item[randNum]
-		console.log("ITEM: " + item)
-    }
-    
-//================================================================================//
-//Heals the player based on HP
-//================================================================================//
+
+
+	//================================================================================//
+	//Heals the player based on HP
+	//================================================================================//
 	var healPlayer = (player) =>
 	{
 		let healthMax = player.total_hp - 15
@@ -425,7 +524,6 @@ var getPlayerData = function(UID)
 				player.potions = player.potions - 1;
 				$("#hpPotionsh3").replaceWith('<h3 id="hpPotionsh3">Potions: ' + player.potions + '</h3>');
 				$("#playerHPh3").replaceWith('<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
-
 			}
 			else
 			{
@@ -441,9 +539,50 @@ var getPlayerData = function(UID)
     
 
 
-//================================================================================//
-//Generates a the paths and buttons for paths
-//================================================================================//
+	//================================================================================//
+	//Items array (just gold and potions for the time being)
+	//================================================================================//
+	var Item = [
+		'gold', 'potion'
+    ]
+    
+
+
+	//================================================================================//
+	//Generates an item from the Item array
+	//================================================================================//
+	var GenerateItem = (player) =>
+	{
+		let randNum = GetRandomInt(0, 1)
+		let item = Item[randNum]
+		switch (item)
+		{
+			case "gold":
+				let goldAmount = GetRandomInt(20, 100)
+				setTimeout(waita, 700)
+
+				function waita()
+				{
+					$("#mainGameBox").append('<h2 id="itemMsg">You found ' + goldAmount + " gold!")
+					$("#itemMsg").show()
+				}
+				player.gold += goldAmount
+				updatePlayer(player)
+				break
+			case "potion":
+				$("#mainGameBox").append('<h2 id="itemMsg">You found a health potion!')
+				$("#itemMsg").show()
+				player.potions += 1
+				updatePlayer(player)
+				break
+		}
+    }
+    
+
+
+	//================================================================================//
+	//Generates a the paths and buttons for paths
+	//================================================================================//
 	var GeneratePath = (player) =>
 	{
 		let newRooms = $(
@@ -475,83 +614,23 @@ var getPlayerData = function(UID)
 			roomBtn.text(rooms[i]);
 			$("#whichWay").append(roomBtn);
 		}
+		GenerateItem(player)
 		$(".room").on("click", () =>
 		{
-			GenerateItem()
+			$("#itemMsg").remove()
 			updatePlayer(player)
-			return Main(player)
+			getPlayerData(playerUID).then((player) =>
+			{
+				return Main(player)
+			})
 		})
     }
     
-//================================================================================//
-//Shop Button Function
-//================================================================================//
-	var shopFunc = (player) =>
-	{
-		console.log("Open Store");
-		$("#storeDiv").show();
-		$("#sharpen").show();
-		$("#shield").show();
-		$("#accu").show();
-		$("#shopButton").hide();
-		$("#done").show();
-		$("#defBtnTxt").text(player.defGoldNeed + " gold");
-		$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
-		$("#accBtnTxt").text(player.accuGoldNeed + " gold");
-		$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
-    }
-    
-//================================================================================//
-//Hides Shop
-//================================================================================//
-	var hideShop = () =>
-	{
-		$("#done").hide();
-		$("#shopButton").show();
-		setTimeout(closeShop, 1)
 
-		function closeShop()
-		{
-			$("#storeDiv").hide();
-			$("#shopButton").show();
-			$("")
-		}
-    }
-    
-//================================================================================//
-//Buy potion button
-//================================================================================//
-	var buyPotion = (player) =>
-	{
-		if (player.potions <= 10)
-		{
-			if (player.gold >= player.potionGoldNeed)
-			{
-				console.log("potionbuy");
-				player.potions += 1;
-				player.gold -= player.potionGoldNeed;
-				$("#goldh3").html("Gold: " + player.gold);
-				player.potionGoldNeed += 10;
-				$("#hpPotionsh3").html('Potions: ' + player.potions);
-				$("#defBtnTxt").text(player.defGoldNeed + " gold");
-				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
-				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
-				$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
-			}
-			else
-			{
-				alert("not enough gold!");
-			}
-		}
-		else
-		{
-			alert("You have too many potions!");
-		}
-    }
-    
-//================================================================================//
-//Generates a path or a fight
-//================================================================================//
+
+	//================================================================================//
+	//Generates a path or a fight
+	//================================================================================//
 	var GenerateScenario = (player) =>
 	{
 		var randNum = GetRandomInt(1, 2);
@@ -569,12 +648,14 @@ var getPlayerData = function(UID)
     }
     
 
-    
-//================================================================================//
-//Generates a monster from the array for the player to fight
-//================================================================================//
+
+	//================================================================================//
+	//Generates a monster from the array for the player to fight
+	//================================================================================//
 	var GenerateMonster = (player) =>
-	{
+	{   
+        $("#mainGameBox").empty()
+        
 		let randNum = GetRandomInt(0, 4)
 		if (player.xp <= 50)
 		{
@@ -588,54 +669,60 @@ var getPlayerData = function(UID)
 		{
 			var monster = monsters[GetRandomInt(3, 6)];
         }
-        
-        //====================
-        //HTML WORK FOR COMBAT
-        //====================
 
-		
+        $("#mainGameBox").append('<h2 class="monsterTxt">Something is stirring in the darkness.</h2><br><h3 class="monsterTxt"> Brace yourself traveler!</h3>')
+        setTimeout(waitCombat,2100)
+        function waitCombat(){
+        //====================
+		//HTML WORK FOR COMBAT
+        //====================
+        $(".monsterTxt").remove()
 		var enemyAppearText = ('<div class="row"><div id="playerImg" class="col-md-6"><h2 id=playerName></h2></div>' +
-			'<div id="appearEnemy" class="col-md-6"></div></div>')
-		var attackRow = (
-			'<div class="row">' +
-			'<div class="col-md-12 id="attackRow">' +
-			'<h2 id="playerAttack"></h2><h2 id="playerDamage"></h2>' + '<h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2>' +
-			'</div></div>')
-		$("#playerHP").hide()
-		$("#attackRow").show();
-		$("#mainGameBox").append(enemyAppearText);
-		$("#appearEnemy").append('<h3 id="killed"></h3>');
-		$("#killed").hide();
-		$("#mainGameBox").show();
-		$("#playerImg").show()
-		$("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
-		$("#playerName").html(player.name)
-		$("#appearEnemy").append("<h2 id=enemyName>" + monster.name + "</h2>");
-		$("#appearEnemy").append('<img class="center-block" id="eimg" class="img-fluid" src="' + monster.img + '" width="200" height="200">');
-		$("#appearEnemy").append('<h3 id="enemyHpH3">' + monster.hp + ' HP</h3>');
-		$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="attackBtn" class="center-block btn btn-danger">Attack!</button></div><div class="col-md-4"></div></div>');
-		$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="waitAttackBtn" class="center-block btn btn">Wait...</button></div><div class="col-md-4"></div></div>');
-		$("#waitAttackBtn").hide();
-		console.log("Test enemy HP: " + monster.hp);
-		$("#eimg").show();
-		$("#enemyInfo").show();
-		$("#playerAttack").show();
-		$("#playerDamage").show();
-		$("#enemyDamage").show();
-		$("#enemyAttack").show();
-        $("#mainGameBox").append(attackRow)
-        $("#shopButton").hide();
-        $("#eimg").show();
-		$("#attackBtn").on("click", () =>
-		{
-			combat(monster, player);
-		});
+        '<div id="appearEnemy" class="col-md-6"></div></div>')
+    var attackRow = (
+        '<div class="row">' +
+        '<div class="col-md-12 id="attackRow">' +
+        '<h2 id="playerAttack"></h2><h2 id="playerDamage"></h2>' + '<h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2>' +
+        '</div></div>')
+    $("#playerHP").hide()
+    $("#attackRow").show();
+    $("#mainGameBox").append(enemyAppearText);
+    $("#appearEnemy").append('<h3 id="killed"></h3>');
+    $("#killed").hide();
+    $("#mainGameBox").show();
+    $("#playerImg").show()
+    $("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
+    $("#playerName").html(player.name)
+    $("#appearEnemy").append("<h2 id=enemyName>" + monster.name + "</h2>");
+    $("#appearEnemy").append('<img class="center-block" id="eimg" class="img-fluid" src="' + monster.img + '" width="200" height="200">');
+    $("#appearEnemy").append('<h3 id="enemyHpH3">' + monster.hp + ' HP</h3>');
+    $("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="attackBtn" class="center-block btn btn-danger">Attack!</button></div><div class="col-md-4"></div></div>');
+    $("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="waitAttackBtn" class="center-block btn btn">Wait...</button></div><div class="col-md-4"></div></div>');
+    $("#waitAttackBtn").hide();
+    console.log("Test enemy HP: " + monster.hp);
+    $("#eimg").show();
+    $("#enemyInfo").show();
+    $("#playerAttack").show();
+    $("#playerDamage").show();
+    $("#enemyDamage").show();
+    $("#enemyAttack").show();
+    $("#mainGameBox").append(attackRow)
+    $("#shopButton").hide();
+    $("#eimg").show();
+    $("#attackBtn").on("click", () =>
+    {
+        combat(monster, player);
+    });
+
+        }
+		
     }
     
 
-//================================================================================//
-//After combat messages and functions
-//================================================================================//
+
+	//================================================================================//
+	//After combat messages and functions
+	//================================================================================//
 	var afterCombat = (player, monster) =>
 	{
 		$("#mainGameBox").empty(400)
@@ -644,8 +731,8 @@ var getPlayerData = function(UID)
 		let giveXP = monster.xp
 		var afterCombatRow = $('<div class="row container" id="acRow">')
 		var afterCombatDiv = $('<div id="monsterKilled" class="col-md-12">')
-        $("#mainGameBox").append(afterCombatRow)
-        $("#acRow").append(afterCombatDiv)
+		$("#mainGameBox").append(afterCombatRow)
+		$("#acRow").append(afterCombatDiv)
 		$("#enemyName").hide()
 		$("#monsterKilled").prepend('<img class="mx-auto d-block" id="killedImg" src="' + dead + '" width="200" height="200">')
 		$("#monsterKilled").append("<h2 class='text-center mx-auto d-block'>You've killed " + monsterName + "!</h2")
@@ -665,9 +752,9 @@ var getPlayerData = function(UID)
 			console.log("You've killed " + monster.name + "!")
             updatePlayer(player)
             
-            //=====================
-            //RESETS MONSTER HEALTH
-            //=====================
+			//=====================
+			//RESETS MONSTER HEALTH
+			//=====================
 			function regen(monster)
 			{
 				monster.hp = monster.total_hp
@@ -675,16 +762,15 @@ var getPlayerData = function(UID)
 				console.log("HP now?: " + monster.hp);
 			}
 			if (player.xp <= 75)
-			{   
+			{
 				console.log("if")
 				if (player.exp >= 25)
 				{
-                    $("#headRow").hide(300)
-                    $(".msgRow").show()
-                    $("#msgDiv").show(200)
-                    $("#msgDiv").addClass("alert alert-success")
-                    $("#msgDiv").html("You can level up! Click the level up button!")
-
+					$("#headRow").hide(300)
+					$(".msgRow").show()
+					$("#msgDiv").show(200)
+					$("#msgDiv").addClass("alert alert-success")
+					$("#msgDiv").html("You can level up! Click the level up button!")
 					regen(monster)
 					$("#lvlUpBtn").show()
 					$("#mainGameBox").hide()
@@ -720,12 +806,12 @@ var getPlayerData = function(UID)
 			else
 			{
 				if (player.exp >= 75)
-                {   
-                    $("#headRow").hide(300)
-                    $(".msgRow").show()
-                    $("#msgDiv").show(200)
-                    $("#msgDiv").addClass("alert alert-success")
-                    $("#msgDiv").html("You can level up! Click the level up button!")
+				{
+					$("#headRow").hide(300)
+					$(".msgRow").show()
+					$("#msgDiv").show(200)
+					$("#msgDiv").addClass("alert alert-success")
+					$("#msgDiv").html("You can level up! Click the level up button!")
 					regen(monster)
 					$("#lvlUpBtn").show()
 					$("#mainGameBox").hide()
@@ -759,11 +845,13 @@ var getPlayerData = function(UID)
 				}
 			}
 		}
-	}
+    }
+    
 
-//================================================================================//
-//Combat Function
-//================================================================================//
+
+	//================================================================================//
+	//Combat Function
+	//================================================================================//
 	function combat(monster, player)
 	{
 		$("#shopButton").hide()
@@ -878,19 +966,35 @@ var getPlayerData = function(UID)
 		{
 			afterCombat(player, monster)
 		}
-	}
-
+    }
     
 
 
-//================================================================================//
-//Starts the game and gets the player data
-//================================================================================//
+	//================================================================================//
+	//Starts the game and gets the player data
+	//================================================================================//
 	$("#enterDunBtn").on("click", function(e)
 	{
 		console.log("CLICKED")
 		getPlayerData(playerUID).then(function(player)
 		{
+            $("#mainGameBox").empty(200)
+            $("#mainGameBox").append("<h2 class='welcomeTxt'>Good Luck Traveler....</h2>")
+            setTimeout(waitA,1800)
+            function waitA(){
+                $(".welcomeTxt").html("You will need it")
+                
+                setTimeout(waitB,1200)
+                function waitB(){
+                    $(".welcomeTxt").animateCss("fadeOut")
+                }
+
+            }
+
+
+            setTimeout(toGame,4000)
+            function toGame(){
+
 			$("#playerHP").show()
 			$("#navSpan").html("Welcome " + player.name)
 			$("#hudRow").show()
@@ -904,7 +1008,8 @@ var getPlayerData = function(UID)
 			$("#hpPotionsh3").html("Potions: " + player.potions)
 			$("#xph3").html("XP: " + player.xp)
 			$("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
-			$("#mainGameBox").replaceWith('<div class="col-md-12" id="mainGameBox">')
+            $("#mainGameBox").replaceWith('<div class="col-md-12" id="mainGameBox">')
+            
 			$("#whichWay").show()
 			$("#potionBtn").on("click", () =>
 			{
@@ -936,7 +1041,6 @@ var getPlayerData = function(UID)
 				defButton(player)
 				updatePlayer(player)
 			});
-			//button not working
 			$("#accBtn").on("click", function()
 			{
 				accuButton(player)
@@ -949,6 +1053,8 @@ var getPlayerData = function(UID)
 				updatePlayer(player)
 			});
 			Main(player);
+            }
+
 		})
 	})
 })
