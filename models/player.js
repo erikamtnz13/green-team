@@ -1,9 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
 	var Player = sequelize.define("Player", {
-	  // player_UID: {
-		// type: DataTypes.INTEGER,
-		// allowNull: true,
-    //   },
+	  Player_UID: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
+      },
 	  name: {
 		type: DataTypes.STRING,
 		allowNull: true,
@@ -13,31 +13,27 @@ module.exports = function(sequelize, DataTypes) {
 	  },
 	  hp: {
 		type: DataTypes.INTEGER,
-		defaultValue: 10
+		defaultValue: false
       },
       total_hp: {
           type: DataTypes.INTEGER,
-          defaultValue: 10
+          allowNull: false
       },
       attack: {
           type: DataTypes.INTEGER,
-          defaultValue: 10
+          allowNull: false
       },
       damage: {
         type: DataTypes.INTEGER,
-        defaultValue: 10
+        allowNull: false
       },
       defense: {
         type: DataTypes.INTEGER,
-        defaultValue: 10
+        allowNull: false
       },
       xp: {
         type: DataTypes.INTEGER,
-        defaultValue: 10
-      },
-      exp: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: false
       },
       exp: {
         type: DataTypes.INTEGER,
@@ -45,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       lvl: {
         type: DataTypes.INTEGER,
-        defaultValue: 10
+        allowNull: false
       },
       potions: {
         type: DataTypes.INTEGER,
@@ -94,25 +90,18 @@ module.exports = function(sequelize, DataTypes) {
     },
   {
     timestamps: true
-  }
-// );
-  // Player.associate = function(models){
-  //   Player.belongsTo(models.UserInfo, {
-  //     foreignKey: {
-  //       //name: 'UserInfoId',
-  //       allowNull: false
-  //     }
-  //   });
+  });
+
+
+
+  Player.associate = function(models){
+    Player.belongsTo(models.UserInfo, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
 
     
-  // };
-
-  , {
-    classMethods: {
-      associate: function(models) {
-        Player.hasMany(models.UserInfo, {foreignKey: 'UserInfoId'});
-      }
-    }
-  });
+  };
     return Player;
   };
