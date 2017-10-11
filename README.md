@@ -47,8 +47,6 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 - [Green Team: Unnamed Turnbased Game](#green-team-unnamed-turnbased-game)
     - [Description](#description)
     - [Status](#status)
-            - [- #### WORK IN PROGRESS](#work-in-progress)
-        - [To Do](#to-do)
     - [How to Use (Game)](#how-to-use-game)
     - [Installation (Source Code)](#installation-source-code)
     - [Tech/Framework Used](#techframework-used)
@@ -61,7 +59,8 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 
 
 ## How to Use (Game)
-- Navigate to "insert URL"
+- Navigate to https://dungeon-crusade.herokuapp.com/game
+    - until login is finished, populate the database with mySQL workbench, use the seed provided and use the JawsDB info. DM me for Jaws info
 - Create a session by logging in.
 - Click through the rooms to find loot and encounter enemies
 - Continue until player is defeated
