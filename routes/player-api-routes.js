@@ -14,10 +14,26 @@ module.exports = function(app) {
 
   app.get("/scores",function(req,res){
     db.Player.findAll({}).then(function(dbPlayer){
-      console.log(dbPlayer);
+      // console.log(dbPlayer);
       res.render("scores", dbPlayer);
     });
     
+  });
+  app.get("/characters",function(req,res){
+    db.Player.findAll({}).then(function(dbPlayer){
+      // console.log(dbPlayer);
+      res.render("characters", dbPlayer);
+    });
+    
+  });
+  app.post("/characters", function(req, res) {
+    // console.log(req.body)
+    // req.body.UserInfoId = 3;
+    db.Player.create(req.body).then(function(data) {
+      // res.json(data)
+      // window.location = data;
+      res.redirect("/game");
+    });
   });
 
   // GET route for getting all of the posts
@@ -31,7 +47,8 @@ module.exports = function(app) {
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Author
     db.Player.findAll({
-      where: query
+      where: query,
+      include: [db.UserInfo.id]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
     });
@@ -45,7 +62,8 @@ module.exports = function(app) {
     db.Player.findOne({
       where: {
         id: req.params.id
-      }
+      },
+      include: [db.UserInfo.id]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
      });
@@ -87,4 +105,5 @@ module.exports = function(app) {
       res.json(dbPlayer);
     });
   });
+
 };

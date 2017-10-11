@@ -1,6 +1,10 @@
 /* @media only screen and (max-width: 1080px) {  */
     body{
+<<<<<<< HEAD
+        background-image: url("/imgs/bg1.jpg");
+=======
         background-image: url("./public/imgs/bg1.jpg");
+>>>>>>> origin
     }
 
     #wrapper{
@@ -63,4 +67,8 @@
         height: 50px;
         width: 115px;
     }
+}
+
+h2 {
+    color: blanchedalmond
 }
