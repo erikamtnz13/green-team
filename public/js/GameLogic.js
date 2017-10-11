@@ -120,9 +120,9 @@ $(document).ready(function($)
 			items: ['gold', 'potion'],
 			xp: +25,
 			//----------misc----------//
-			img: "",
+			img: "/img/warrior.gif",
 			attackImg: "/img/monsterAttack.gif",
-			killedImg: ""
+			killedImg: "/img/warriorDead.png"
 		},
 		//===========New Enemy===========//
 		{
@@ -137,9 +137,9 @@ $(document).ready(function($)
 			items: ['gold', 'potion'],
 			xp: +50,
 			//----------misc----------//
-			img: "",
+			img: "/img/demon.gif",
 			attackImg: "/img/monsterAttack.gif",
-			killedImg: ""
+			killedImg: "/img/demonDead.png"
 		},
 		//===========New Enemy===========//
 		{
@@ -154,9 +154,9 @@ $(document).ready(function($)
 			items: ['gold', 'potion'],
 			xp: +100,
 			//----------misc----------//
-			img: "",
+			img: "/img/dancingMario.gif",
 			attackImg: "/img/monsterAttack.gif",
-			killedImg: ""
+			killedImg: "/img/marioDead.png"
 		},
     ];
     
@@ -473,7 +473,7 @@ $(document).ready(function($)
 				$("#goldh3").html("Gold: " + player.gold);
 				$("#eimg").show();
 				updatePlayer(player)
-				setTimeout(waitm, 10000);
+				setTimeout(waitm, 1000);
 
 				function waitm()
 				{
@@ -692,18 +692,19 @@ $(document).ready(function($)
 	{
 		$("#mainGameBox").empty()
 		let randNum = GetRandomInt(0, 4)
-		if (player.xp <= 50)
+		if (player.lvl <= 1)
 		{
 			var monster = monsters[GetRandomInt(0, 1)];
 		}
-		else if (player.xp >= 50)
+		else if (player.lvl >= 2)
 		{
-			var monster = monsters[GetRandomInt(1, 3)];
+			var monster = monsters[GetRandomInt(0, 2)];
 		}
-		else if (player.xp >= 80)
+		else if (player.lvl >= 3)
 		{
-			var monster = monsters[GetRandomInt(3, 6)];
+			var monster = monsters[GetRandomInt(1, 4)];
 		}
+
 		$("#mainGameBox").append('<h2 class="monsterTxt">Something is stirring in the darkness.</h2><br><h3 class="monsterTxt"> Brace yourself traveler!</h3>')
 		setTimeout(waitCombat, 2100)
 
@@ -904,7 +905,7 @@ $(document).ready(function($)
 			{
 				$("#playerDamage").hide(200)
 				$("#playerImgs").replaceWith('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">')
-				$("#eimg").replaceWith('<img src="' + monster.img + '" class="img-fluid" width="200" height="200" id="eimg">')
+				$("#eimg").replaceWith('<img src="' + monster.img + '" class="" width="200" height="200" id="eimg">')
 			}
 			monster.hp -= pDamage
 			$("#enemyHpH3").replaceWith('<h3 id="enemyHpH3">' + monster.hp + " HP</h3>")

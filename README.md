@@ -123,7 +123,7 @@ Source https://github.com/erikamtnz13/green-team.git
 ---
 
 ## License & Copyright
-© Corey Rodems, Steven Simone, Erika Martinez, Peter Surowski; UCI Coding Bootcamp 2017
+© Corey Rodems, Stephen Simone, Erika Martinez, Peter Surowski; UCI Coding Bootcamp 2017
 
 
 
