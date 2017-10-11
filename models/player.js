@@ -9,27 +9,27 @@ module.exports = function(sequelize, DataTypes) {
 	  },
 	  hp: {
 		type: DataTypes.INTEGER,
-		defaultValue: false
+		defaultValue: true
       },
       total_hp: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
       },
       attack: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
       },
       damage: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       defense: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       xp: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       exp: {
         type: DataTypes.INTEGER,
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       lvl: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       potions: {
         type: DataTypes.INTEGER,
@@ -93,7 +93,7 @@ module.exports = function(sequelize, DataTypes) {
   Player.associate = function(models){
     Player.belongsTo(models.UserInfo, {
       foreignKey: {
-        allowNull: false
+        allowNull: true
       }
     });
 

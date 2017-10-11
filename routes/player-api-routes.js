@@ -7,6 +7,8 @@
 
 // Requiring our models
 var db = require("../models");
+var passport = require("passport");
+var passport = require("express-passport");
 
 // Routes
 // =============================================================
@@ -27,14 +29,15 @@ module.exports = function(app) {
     
   });
   app.post("/characters", function(req, res) {
-    // console.log(req.body)
-    req.body.UserInfoId = 1;
+    console.log("Im here", req.session)
+    return res.send('success')
+    req.body.UserInfoId = req.session.user.id;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
       // window.location = data;
       res.redirect("/game");
     });
-  });
+  });   
 
   // GET route for getting all of the posts
   app.get("/api/players", function(req, res) {
