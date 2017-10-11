@@ -29,7 +29,7 @@ char_attack,
 char_spell,
 UserInfoId
 ) values
-('Corey',20,20,0,0,6,20,20,10,5,100,15,15,15,10,0,'','/img/warrior/warrior_idle.gif','/img/warrior/warrior_attack.gif','/img/monsterAttack.gif',1);
+('Corey',20,20,0,0,6,0,0,1,5,100,15,15,15,10,0,'','/img/warrior/warrior_idle.gif','/img/warrior/warrior_attack.gif','/img/monsterAttack.gif',1);
 
 SELECT * FROM game_db.userinfos;
 SELECT * FROM game_db.players;
