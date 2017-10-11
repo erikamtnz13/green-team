@@ -1,9 +1,9 @@
-# Green Team: Unnamed Turnbased Game
+# Green Team: Dungeon Crusade
 - Author(s)
-    - Corey Rodems (Project Management/ Front-end / Game Logic / Handlebars)
-    - Stephen Simone (Front-end / Game Logic / Handlebars)
-    - Erika Martinez (Back-end / Player Data/ Routing)
-    - Peter Surowski (Back-end / User Login / Routing)
+    - Corey Rodems (Project Management / Front-end / Game Logic / Design )
+    - Stephen Simone (Front-end / Game Logic / Design)
+    - Erika Martinez (Back-end / Player Data / User Login / Routing)
+    - Peter Surowski (Back-end / User Login )
 
 <br>
 
@@ -115,15 +115,15 @@ Source https://github.com/erikamtnz13/green-team.git
 ---
 
 ## Green Team Members:
-- [Corey Rodems](https://github.com/coreyro "Corey Rodems") (Project Management/ Front-end / Game Logic / Handlebars)
-- [Steven Simone](https://github.com/theRealScoobaSteve "Steven Simone") (Front-end / Game Logic / Handlebars)
-- [Erika Martinez](https://github.com/erikamtnz13 "Erika Martinez") (Back-end / Player Data/ Routing)
-- [Peter Surowski](https://github.com/PeterSurowski "Peter Surowski") (Back-end / User Login / Routing)
+- [Corey Rodems](https://github.com/coreyro "Corey Rodems") (Project Management / Front-end / Game Logic / Design )
+- [Steven Simone](https://github.com/theRealScoobaSteve "Steven Simone") (Front-end / Game Logic / Design)
+- [Erika Martinez](https://github.com/erikamtnz13 "Erika Martinez") (Back-end / Player Data / User Login / Routing)
+- [Peter Surowski](https://github.com/PeterSurowski "Peter Surowski") (Back-end / User Login )
 ---
+
 
 ## License & Copyright
 © Corey Rodems, Stephen Simone, Erika Martinez, Peter Surowski; UCI Coding Bootcamp 2017
-
 
 
 ---
