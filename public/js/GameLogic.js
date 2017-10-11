@@ -3,7 +3,6 @@
 //Written by Corey Rodems & Stephen Simone (Front End Team) 2017
 //Turn Based Dungeon Crawler
 //================================================================================//
-
 $(document).ready(function($)
 {
 	var encounter = false;
@@ -17,8 +16,8 @@ $(document).ready(function($)
 	$("#lvlUpBtn").hide()
 	$("#foundEnemy").hide()
 	localStorage.UID = 1;
-    const playerUID = localStorage.getItem("UID");
-    
+	const playerUID = localStorage.getItem("UID")
+
 
 
 	//================================================================================//
@@ -35,8 +34,8 @@ $(document).ready(function($)
 			});
 			return this;
 		}
-    });
-    
+	})
+
 
 
 	//================================================================================//
@@ -53,8 +52,67 @@ $(document).ready(function($)
 		$("#lvlUpBtn").hide()
 		$("#foundEnemy").hide()
 		GenerateScenario(player)
-    }
-    
+	}
+
+
+	//================================================================================//
+	//Gets the current player object in the database
+	//================================================================================//
+	var getPlayerData = function(UID)
+	{
+		return new Promise(function(res, rej)
+		{
+			$.get("/api/players/" + UID, function(player)
+			{
+				$("#potionBtnTxt").text(player.gold + " gold")
+				$("#dmgStat").text(player.damage + "/15")
+				$("#defStat").text(player.defense + "/10")
+				$("#accuStat").text(player.attack + "/10")
+				$("#playerHP").html(player.hp + " HP")
+				$("#playerLevel").html("Player Level: " + player.lvl)
+				$("#goldh3").html("Gold: " + player.gold)
+				$("#hpPotionsh3").html("Potions: " + player.potions)
+				$("#xph3").html("XP: " + player.xp)
+				$("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
+				res(player)
+			});
+		})
+	}
+
+
+
+	//================================================================================//
+	//Calls the database and updates the player object
+	//================================================================================//
+	var updatePlayer = function(player)
+	{
+		jQuery.ajax(
+		{
+			type: 'PUT',
+			url: '/api/players/' + player.id,
+			data:
+			{
+				hp: player.hp,
+				total_hp: player.total_hp,
+				attack: player.attack,
+				damage: player.damage,
+				defense: player.defense,
+				xp: player.xp,
+				exp: player.exp,
+				lvl: player.lvl,
+				potions: player.potions,
+				gold: player.gold,
+				defGoldNeed: player.defGoldNeed,
+				dmgGoldNeed: player.dmgGoldNeed,
+				accuGoldNeed: player.accuGoldNeed,
+				potionGoldNeed: player.potionGoldNeed,
+				enemiesKilled: player.enemiesKilled,
+			},
+			success: function(result) {
+			}
+		})
+	}
+
 
 
 	//================================================================================//
@@ -65,8 +123,8 @@ $(document).ready(function($)
 	$("#hudRow").hide()
 	$("#mainGameBox").show()
 	$("#lvlUpBtn").hide()
-    $("#foundEnemy").hide()
-    
+	$("#foundEnemy").hide()
+
 
 
 	//================================================================================//
@@ -84,7 +142,7 @@ $(document).ready(function($)
 			damage: 0,
 			defense: 1,
 			items: ['gold', 'potion'],
-			xp: +5,
+			xp: +6,
 			//----------misc----------//
 			img: "/img/skel.gif",
 			attackImg: "/img/monsterAttack.gif",
@@ -101,7 +159,7 @@ $(document).ready(function($)
 			damage: 1,
 			defense: 3,
 			items: ['gold', 'potion'],
-			xp: +10,
+			xp: +11,
 			//----------misc----------//
 			img: "/img/rat.gif",
 			attackImg: "/img/monsterAttack.gif",
@@ -118,7 +176,7 @@ $(document).ready(function($)
 			damage: 6,
 			defense: 5,
 			items: ['gold', 'potion'],
-			xp: +25,
+			xp: +26,
 			//----------misc----------//
 			img: "/img/warrior.gif",
 			attackImg: "/img/monsterAttack.gif",
@@ -135,7 +193,7 @@ $(document).ready(function($)
 			damage: 10,
 			defense: 7,
 			items: ['gold', 'potion'],
-			xp: +50,
+			xp: +51,
 			//----------misc----------//
 			img: "/img/demon.gif",
 			attackImg: "/img/monsterAttack.gif",
@@ -158,8 +216,8 @@ $(document).ready(function($)
 			attackImg: "/img/monsterAttack.gif",
 			killedImg: "/img/marioDead.png"
 		},
-    ];
-    
+	]
+
 
 
 	//================================================================================//
@@ -177,8 +235,8 @@ $(document).ready(function($)
 		$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 		$("#accBtnTxt").text(player.accuGoldNeed + " gold");
 		$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -196,8 +254,8 @@ $(document).ready(function($)
 			$("#shopButton").show();
 			$("")
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -262,9 +320,9 @@ $(document).ready(function($)
 			$("thisAlert").remove()
 			$(".msgRow").hide(200)
 		}
-    }
-    
+	}
 
+	
 
 	//================================================================================//
 	//Buy potion button
@@ -277,13 +335,14 @@ $(document).ready(function($)
 			{
 				player.potions += 1;
 				player.gold -= player.potionGoldNeed;
-				$("#goldh3").html("Gold: " + player.gold);
 				player.potionGoldNeed += 10;
+				$("#goldh3").html("Gold: " + player.gold);
 				$("#hpPotionsh3").html('Potions: ' + player.potions);
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
 				$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+				return updatePlayer(player)
 			}
 			else
 			{
@@ -294,71 +353,7 @@ $(document).ready(function($)
 		{
 			maxPot()
 		}
-    }
-    
-
-
-	//================================================================================//
-	//Gets the current player object in the database
-	//================================================================================//
-	var getPlayerData = function(UID)
-	{
-		return new Promise(function(res, rej)
-		{
-			$.get("/api/players/" + UID, function(player)
-			{
-				$("#potionBtnTxt").text(player.gold + " gold")
-				$("#dmgStat").text(player.damage + "/15")
-				$("#defStat").text(player.defense + "/10")
-				$("#accuStat").text(player.attack + "/10")
-				$("#playerHP").html(player.hp + " HP")
-				$("#playerLevel").html("Player Level: " + player.lvl)
-				$("#goldh3").html("Gold: " + player.gold)
-				$("#hpPotionsh3").html("Potions: " + player.potions)
-				$("#xph3").html("XP: " + player.xp)
-				$("#enemiesKilledh3").html("Kills: " + player.enemiesKilled)
-				res(player)
-			});
-		})
-    }
-    
-
-
-	//================================================================================//
-	//Calls the database and updates the player object
-	//================================================================================//
-	var updatePlayer = function(player)
-	{
-		jQuery.ajax(
-		{
-			type: 'PUT',
-			url: '/api/players/' + player.id,
-			data:
-			{
-				hp: player.hp,
-				total_hp: player.total_hp,
-				attack: player.attack,
-				damage: player.damage,
-				defense: player.defense,
-				xp: player.xp,
-				exp: player.exp,
-				lvl: player.lvl,
-				potions: player.potions,
-				gold: player.gold,
-				defGoldNeed: player.defGoldNeed,
-				dmgGoldNeed: player.dmgGoldNeed,
-				accuGoldNeed: player.accuGoldNeed,
-				potionGoldNeed: player.potionGoldNeed,
-				enemiesKilled: player.enemiesKilled,
-			},
-			success: function(result)
-			{
-
-			}
-		})
-    }
-    
-
+	}
 
 	//================================================================================//
 	//Damage stat button function
@@ -371,13 +366,14 @@ $(document).ready(function($)
 			{
 				player.damage += 1;
 				player.gold -= player.dmgGoldNeed;
-				$("#goldh3").html("Gold: " + player.gold);
 				player.dmgGoldNeed += 25;
+				$("#goldh3").html("Gold: " + player.gold);
 				$("#dmgStat").text(player.damage + "/15");
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
 				$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+				return updatePlayer(player)
 			}
 			else
 			{
@@ -388,8 +384,8 @@ $(document).ready(function($)
 		{
 			maxStat()
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -403,13 +399,14 @@ $(document).ready(function($)
 			{
 				player.defense += 1;
 				player.gold -= player.defGoldNeed;
-				$("#goldh3").html("Gold: " + player.gold);
 				player.defGoldNeed += 25;
+				$("#goldh3").html("Gold: " + player.gold);
 				$("#defStat").text(player.defense + "/15");
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
 				$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+				return updatePlayer(player)
 			}
 			else
 			{
@@ -420,8 +417,8 @@ $(document).ready(function($)
 		{
 			maxStat()
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -435,13 +432,14 @@ $(document).ready(function($)
 			{
 				player.attack += 1;
 				player.gold -= player.accuGoldNeed;
-				$("#goldh3").html("Gold: " + player.gold);
 				player.accuGoldNeed += 25;
+				$("#goldh3").html("Gold: " + player.gold);
 				$("#accuStat").text(player.attack + "/15");
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
 				$("#potionBtnTxt").text(player.potionGoldNeed + " gold");
+				return updatePlayer(player)
 			}
 			else
 			{
@@ -452,8 +450,8 @@ $(document).ready(function($)
 		{
 			maxStat()
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -499,19 +497,16 @@ $(document).ready(function($)
 				$("#goldh3").html("Gold: " + player.gold);
 				player.hp = player.total_hp;
 				$("#eimg").show();
+				updatePlayer(player)
 				setTimeout(up, 400);
 
 				function up()
 				{
-					updatePlayer(player)
-					getPlayerData(playerUID).then(function(player)
-					{
-						player.exp = 0;
-						$("#msgDiv").empty()
-						$("#msgDiv").removeClass("alert alert-success")
-						$(".msgRow").hide(200)
-						Main(player);
-					})
+					player.exp = 0;
+					$("#msgDiv").empty()
+					$("#msgDiv").removeClass("alert alert-success")
+					$(".msgRow").hide(200)
+					Main(player);
 				}
 			}
 			else
@@ -519,8 +514,8 @@ $(document).ready(function($)
 				noLevel()
 			}
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -529,8 +524,8 @@ $(document).ready(function($)
 	var GetRandomInt = (min, max) =>
 	{
 		return Math.floor(Math.random() * (max - min + 1)) + min
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -550,16 +545,15 @@ $(document).ready(function($)
 				if (player.hp <= healthMax)
 				{
 					player.hp += 15;
-					updatePlayer(player)
 				}
 				else
 				{
 					player.hp = player.total_hp;
-					updatePlayer(player)
 				}
 				player.potions = player.potions - 1;
 				$("#hpPotionsh3").replaceWith('<h3 id="hpPotionsh3">Potions: ' + player.potions + '</h3>');
 				$("#playerHPh3").replaceWith('<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
+				updatePlayer(player)
 			}
 			else
 			{
@@ -571,17 +565,17 @@ $(document).ready(function($)
 				}
 			}
 		}
-    }
-    
+	}
 
 
+	
 	//================================================================================//
 	//Items array (just gold and potions for the time being)
 	//================================================================================//
 	var Item = [
 		'gold', 'potion'
-    ]
-    
+	]
+
 
 
 	//================================================================================//
@@ -595,25 +589,35 @@ $(document).ready(function($)
 		{
 			case "gold":
 				let goldAmount = GetRandomInt(5, 50)
-				setTimeout(waita, 700)
+				player.gold += goldAmount
+				setTimeout(waita, 300)
 
 				function waita()
 				{
 					$("#mainGameBox").append('<h2 id="itemMsg">You found ' + goldAmount + " gold!")
+					$("#goldh3").html("Gold: " + player.gold)
 					$("#itemMsg").show()
+					$("#itemMsg").animateCss("fadeIn")
 				}
-				player.gold += goldAmount
 				updatePlayer(player)
 				break
 			case "potion":
-				$("#mainGameBox").append('<h2 id="itemMsg">You found a health potion!')
-				$("#itemMsg").show()
 				player.potions += 1
+				setTimeout(waitb, 300)
+
+				function waitb()
+				{
+					$("#mainGameBox").append('<h2 id="itemMsg">You found a health potion!')
+					$("#hpPotionsh3").html("Potions: " + player.potions)
+					$("#itemMsg").show()
+					$("#itemMsg").animateCss("fadeIn")
+
+				}
 				updatePlayer(player)
 				break
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -655,13 +659,10 @@ $(document).ready(function($)
 		{
 			$("#itemMsg").remove()
 			updatePlayer(player)
-			getPlayerData(playerUID).then((player) =>
-			{
-				return Main(player)
-			})
+			return Main(player)
 		})
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -681,8 +682,8 @@ $(document).ready(function($)
 				break
 		}
 		return scenario
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -704,7 +705,6 @@ $(document).ready(function($)
 		{
 			var monster = monsters[GetRandomInt(1, 4)];
 		}
-
 		$("#mainGameBox").append('<h2 class="monsterTxt">Something is stirring in the darkness.</h2><br><h3 class="monsterTxt"> Brace yourself traveler!</h3>')
 		setTimeout(waitCombat, 2100)
 
@@ -722,11 +722,11 @@ $(document).ready(function($)
 				'<h2 id="playerAttack"></h2><h2 id="playerDamage"></h2>' + '<h2 id="enemyAttack"></h2><h2 id="enemyDamage"></h2>' +
 				'</div></div>')
 			$("#playerHP").hide()
-			$("#attackRow").show();
+			$("#attackRow").animateCss("fadeIn");
 			$("#mainGameBox").append(enemyAppearText);
 			$("#appearEnemy").append('<h3 id="killed"></h3>');
 			$("#killed").hide();
-			$("#mainGameBox").show();
+			$("#mainGameBox").animateCss("zoomIn");
 			$("#playerImg").show()
 			$("#playerImg").append('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">' + '<h3 id="playerHPh3">' + player.hp + ' HP</h3>')
 			$("#playerName").html(player.name)
@@ -750,8 +750,8 @@ $(document).ready(function($)
 				combat(monster, player);
 			});
 		}
-    }
-    
+	}
+
 
 
 	//================================================================================//
@@ -759,120 +759,115 @@ $(document).ready(function($)
 	//================================================================================//
 	var afterCombat = (player, monster, giveXP) =>
 	{
+		console.log("====================UPDATE PLAYER AFTER COMBAT====================")
 		updatePlayer(player)
 		let dead = monster.killedImg
 		let monsterName = monster.name
-		getPlayerData(playerUID).then(function(player)
+		var afterCombatRow = $('<div class="row container" id="acRow">')
+		var afterCombatDiv = $('<div id="monsterKilled" class="col-md-12">')
+		$("#mainGameBox").empty()
+		$("#mainGameBox").animateCss("fadeIn")
+		$("#mainGameBox").append(afterCombatRow)
+		$("#acRow").append(afterCombatDiv)
+		$("#enemyName").hide()
+		$("#monsterKilled").prepend('<img class="mx-auto d-block" id="killedImg" src="' + dead + '" width="200" height="200">')
+		$("#monsterKilled").append("<h2 class='text-center mx-auto d-block'>You've killed " + monsterName + "!</h2")
+		setTimeout(waita, 1000)
+
+		function waita()
 		{
-			var afterCombatRow = $('<div class="row container" id="acRow">')
-			var afterCombatDiv = $('<div id="monsterKilled" class="col-md-12">')
-			$("#mainGameBox").append(afterCombatRow)
-			$("#acRow").append(afterCombatDiv)
-			$("#enemyName").hide()
-			$("#monsterKilled").prepend('<img class="mx-auto d-block" id="killedImg" src="' + dead + '" width="200" height="200">')
-			$("#monsterKilled").append("<h2 class='text-center mx-auto d-block'>You've killed " + monsterName + "!</h2")
-			setTimeout(waita, 1000)
+			$("#monsterKilled").append("<h3 class='mx-auto d-block text-center'>You gained " + giveXP + " XP!</h3>")
+			$("#xph3").html("XP: " + player.xp)
+			$("#enemiesKilledh3").html("Killed: " + player.enemiesKilled)
 
-			function waita()
+			//=====================
+			//RESETS MONSTER HEALTH
+			//=====================
+			function regen(monster)
 			{
-				$("#monsterKilled").append("<h3 class='mx-auto d-block text-center'>You gained " + giveXP + " XP!</h3>")
-				$("#xph3").html("XP: " + player.xp)
-				$("#enemiesKilledh3").html("Killed: " + player.enemiesKilled)
-
-				//=====================
-				//RESETS MONSTER HEALTH
-				//=====================
-				function regen(monster)
+				monster.hp = monster.total_hp
+			}
+			if (player.xp <= 75)
+			{
+				if (player.exp >= 25)
 				{
-					monster.hp = monster.total_hp
-	
-				}
-				if (player.xp <= 75)
-				{
-					if (player.exp >= 25)
+					$("#headRow").hide(300)
+					$(".msgRow").show()
+					$("#msgDiv").show(200)
+					$("#msgDiv").addClass("alert alert-success")
+					$("#msgDiv").html("You can level up! Click the level up button!")
+					regen(monster)
+					$("#lvlUpBtn").show()
+					$("#mainGameBox").hide()
+					setTimeout(waity, 3000)
+
+					function waity()
 					{
-						$("#headRow").hide(300)
-						$(".msgRow").show()
-						$("#msgDiv").show(200)
-						$("#msgDiv").addClass("alert alert-success")
-						$("#msgDiv").html("You can level up! Click the level up button!")
-						regen(monster)
-						$("#lvlUpBtn").show()
-						$("#mainGameBox").hide()
-						setTimeout(waity, 3000)
-
-						function waity()
-						{
-							$("#killed").hide(400)
-							$("#eimg").hide()
-						}
-					}
-					else
-					{
-						regen(monster)
-						setTimeout(waity, 2000)
-
-						function waity()
-						{
-							$("#killed").hide(400)
-							$("#eimg").hide()
-							setTimeout(returnGame, 1000)
-
-							function returnGame()
-							{
-								getPlayerData(playerUID).then(function(player)
-								{
-									return Main(player)
-								})
-							}
-						}
+						$("#killed").hide(400)
+						$("#eimg").hide()
 					}
 				}
 				else
 				{
-					if (player.exp >= 75)
+					regen(monster)
+					setTimeout(waity, 2000)
+
+					function waity()
 					{
-						$("#headRow").hide(300)
-						$(".msgRow").show()
-						$("#msgDiv").show(200)
-						$("#msgDiv").addClass("alert alert-success")
-						$("#msgDiv").html("You can level up! Click the level up button!")
-						regen(monster)
-						$("#lvlUpBtn").show()
-						$("#mainGameBox").hide()
-						setTimeout(waity, 3000)
+						$("#killed").hide(400)
+						$("#eimg").hide()
+						setTimeout(returnGame, 1000)
 
-						function waity()
+						function returnGame()
 						{
-							$("#killed").hide(400)
-							$("#eimg").hide()
-						}
-					}
-					else
-					{
-						regen(monster)
-						setTimeout(waity, 2000)
-
-						function waity()
-						{
-							$("#killed").hide(400)
-							$("#eimg").hide()
-							setTimeout(returnGame, 1000)
-
-							function returnGame()
-							{
-								getPlayerData(playerUID).then(function(player)
-								{
-									return Main(player)
-								})
-							}
+							updatePlayer(player)
+							return Main(player)
 						}
 					}
 				}
 			}
-		})
-    }
-    
+			else
+			{
+				if (player.exp >= 75)
+				{
+					$("#headRow").hide(300)
+					$(".msgRow").show()
+					$("#msgDiv").show(200)
+					$("#msgDiv").addClass("alert alert-success")
+					$("#msgDiv").html("You can level up! Click the level up button!")
+					regen(monster)
+					$("#lvlUpBtn").show()
+					$("#mainGameBox").hide()
+					setTimeout(waity, 3000)
+
+					function waity()
+					{
+						$("#killed").hide(400)
+						$("#eimg").hide()
+					}
+				}
+				else
+				{
+					regen(monster)
+					setTimeout(waity, 2000)
+
+					function waity()
+					{
+						$("#killed").hide(400)
+						$("#eimg").hide()
+						setTimeout(returnGame, 1000)
+
+						function returnGame()
+						{
+							updatePlayer(player)
+							return Main(player)
+						}
+					}
+				}
+			}
+		}
+	}
+
 
 
 	//================================================================================//
@@ -884,7 +879,7 @@ $(document).ready(function($)
 		$("#eimg").show()
 		$("#attackBtn").hide()
 		$("#waitAttackBtn").show()
-		setTimeout(waitx, 3000)
+		setTimeout(waitx, 3400)
 
 		function waitx()
 		{
@@ -895,17 +890,24 @@ $(document).ready(function($)
 		if (pAttack > monster.defense)
 		{
 			var pDamage = player.damage + GetRandomInt(1, 8)
+			$("#playerDamage").replaceWith('<h4 id="playerDamage">You did ' + pDamage + ' damage to ' + monster.name + '!</h4>')
 			$("#playerDamage").show()
+			$("#playerDamage").animateCss("fadeInUp")
 			$("#playerImgs").replaceWith('<img src="' + player.char_attack + '" class="img-fluid" width="200" height="200" id="playerImgs">')
 			$("#eimg").replaceWith('<img src="' + player.char_spell + '" class="img-fluid" width="200" height="200" id="eimg">')
-			$("#playerDamage").replaceWith('<h4 id="playerDamage">You did ' + pDamage + ' damage to ' + monster.name + '!</h4>')
 			setTimeout(waitv, 1600)
 
 			function waitv()
 			{
-				$("#playerDamage").hide(200)
+				$("#playerDamage").animateCss("fadeOutUp")
 				$("#playerImgs").replaceWith('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">')
 				$("#eimg").replaceWith('<img src="' + monster.img + '" class="" width="200" height="200" id="eimg">')
+				setTimeout(playerHideAttack, 600)
+
+				function playerHideAttack()
+				{
+					$("#playerDamage").hide()
+				}
 			}
 			monster.hp -= pDamage
 			$("#enemyHpH3").replaceWith('<h3 id="enemyHpH3">' + monster.hp + " HP</h3>")
@@ -913,12 +915,19 @@ $(document).ready(function($)
 		else
 		{
 			$("#playerAttack").show()
+			$("#playerAttack").animateCss("shake")
 			$("#playerAttack").replaceWith('<h3 id="playerAttack">' + monster.name + ' dodged your attack!</h3>')
 			setTimeout(waitm, 1600)
 
 			function waitm()
 			{
-				$("#playerAttack").hide(200)
+				$("#playerAttack").animateCss("fadeOut")
+				setTimeout(playerHideMiss, 600)
+
+				function playerHideMiss()
+				{
+					$("#playerAttack").hide()
+				}
 			}
 		}
 		if (monster.hp >= 1)
@@ -931,15 +940,22 @@ $(document).ready(function($)
 				if (eAttack > player.defense)
 				{
 					var eDamage = monster.damage + GetRandomInt(1, 6)
-					$("#enemyDamage").show()
 					$("#playerImgs").replaceWith('<img src="' + monster.attackImg + '" class="img-fluid" width="200" height="200" id="playerImgs">')
 					$("#enemyDamage").replaceWith('<h4 id="enemyDamage">' + monster.name + ' did ' + eDamage + ' damage to you!</h4>')
+					$("#enemyDamage").show()
+					$("#enemyDamage").animateCss("fadeInUp")
 					setTimeout(waitx, 1600)
 
 					function waitx()
 					{
-						$("#enemyDamage").hide(200)
+						$("#enemyDamage").animateCss("fadeOutUp")
 						$("#playerImgs").replaceWith('<img src="' + player.char_idle + '" class="img-fluid" width="200" height="200" id="playerImgs">')
+						setTimeout(hideEnemyAttack, 600)
+
+						function hideEnemyAttack()
+						{
+							$("#enemyDamage").hide()
+						}
 					}
 					player.hp -= eDamage
 					updatePlayer(player)
@@ -971,39 +987,49 @@ $(document).ready(function($)
 				}
 				else
 				{
-					$("#enemyAttack").show()
 					$("#enemyAttack").replaceWith('<h4 id="enemyAttack">' + monster.name + ' Missed their attack!</h4>')
+					$("#enemyAttack").show()
+					$("#enemyAttack").animateCss("fadeInUp")
 					setTimeout(waitg, 1200)
 
 					function waitg()
 					{
-						$("#enemyAttack").hide(200)
+						$("#enemyAttack").animateCss("fadeOutUp")
+						setTimeout(hideEnemyMiss, 600)
+
+						function hideEnemyMiss()
+						{
+							$("#enemyAttack").hide(200)
+						}
 					}
 				}
 			}
 		}
 		else if (monster.hp <= 0)
 		{
-			$("#mainGameBox").empty(400)
-			var giveXP = monster.xp
-			player.xp += giveXP
-			player.exp += giveXP
-			player.enemiesKilled += 1
-			updatePlayer(player)
-			setTimeout(waiting, 800)
+			$("#playerDamage").replaceWith('<h4 id="playerDamage">You did ' + pDamage + ' damage to ' + monster.name + '!</h4>')
+			$("#enemyHpH3").html("0 HP")
+			setTimeout(wait, 1800)
 
-			function waiting()
+			function wait()
 			{
-				getPlayerData(playerUID).then(function(player)
+				var giveXP = monster.xp
+				player.xp += giveXP
+				player.exp += giveXP
+				player.enemiesKilled += 1
+				updatePlayer(player)
+				setTimeout(waiting, 800)
+
+				function waiting()
 				{
 					afterCombat(player, monster, giveXP)
-				})
+				}
 			}
 		}
-    }
-    
+	}
 
-    
+
+
 	//================================================================================//
 	//Starts the game and gets the player data
 	//================================================================================//
@@ -1047,42 +1073,34 @@ $(document).ready(function($)
 				$("#potionBtn").on("click", () =>
 				{
 					buyPotion(player)
-					updatePlayer(player)
 				});
 				$("#shopButton").on("click", () =>
 				{
 					shopFunc(player)
-					updatePlayer(player)
 				});
 				$("#done").on("click", () =>
 				{
 					hideShop()
-					updatePlayer(player)
 				});
 				$(".potionButton").on("click", () =>
 				{
 					healPlayer(player)
-					updatePlayer(player)
 				})
 				$("#dmgBtn").on("click", function()
 				{
 					dmgButton(player)
-					updatePlayer(player)
 				});
 				$("#defBtn").on("click", function()
 				{
 					defButton(player)
-					updatePlayer(player)
 				});
 				$("#accBtn").on("click", function()
 				{
 					accuButton(player)
-					updatePlayer(player)
 				});
 				$("#lvlUpBtn").on("click", function()
 				{
 					lvlUp(player)
-					updatePlayer(player)
 				});
 				Main(player);
 			}
