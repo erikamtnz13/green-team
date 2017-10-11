@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         defaultValue: 10
       },
+      exp: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
       lvl: {
         type: DataTypes.INTEGER,
         defaultValue: 10
@@ -45,7 +49,39 @@ module.exports = function(sequelize, DataTypes) {
       },
       gold: {
         type: DataTypes.INTEGER,
-        defaultValue: 10
+        allowNull: true
+      },
+      defGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      dmgGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      accuGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      potionGoldNeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      enemiesKilled: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      char_img: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      char_idle: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      char_attack: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
   {

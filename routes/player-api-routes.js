@@ -66,7 +66,7 @@ module.exports = function(app) {
       include: [db.UserInfo.id]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
-    });
+     });
   });
 
   // POST route for saving a new post
@@ -88,12 +88,12 @@ module.exports = function(app) {
   });
 
   // PUT route for updating posts
-  app.put("/api/players", function(req, res) {
+  app.put("/api/players/:id", function(req, res) {
     db.Player.update(
       req.body,
       {
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       }).then(function(dbPlayer) {
         res.json(dbPlayer);
