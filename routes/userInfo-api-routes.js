@@ -1,4 +1,13 @@
 var db = require("../models");
+// Set up MySQL connection:
+var mysql = require("mysql")
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: "8889",
+  user: "root",
+  password: "root",
+  database: "game_db"
+});
 
 module.exports = function(app) {
   app.get("/api/users", function(req, res) {
@@ -35,7 +44,7 @@ module.exports = function(app) {
   });
   app.post("/", function(req, res) {
     // console.log("POST root");
-    console.log(req.body)
+    
     //req.body.UserInfo = 3;
     db.UserInfo.create(req.body).then(function(data) {
   
@@ -55,5 +64,33 @@ module.exports = function(app) {
   //     res.json(dbUserInfo);
   //   });
   // });
+
+  // Peter's backup plan code to log in:
+  app.get("/login", function(req, res) {
+    res.render("login");
+  });
+  // Takes data from post and searches for matching data in DB:
+app.post("/auth", function(req, res) {
+  var userInput = req.body;
+  console.log(userInput)
+  var dbQuery = "SELECT * FROM userinfos WHERE name = '" + userInput.name + "' AND password = '" + userInput.password + "';";
+  console.log("We've made it this far.")
+  connection.query(dbQuery, function(err, result) {
+      if (err) throw err;
+      // If the username and password are NOT found in the DB:
+      console.log(result)
+      if (result == false) {
+          res.render("not-found"); 
+          console.log("can't find your username and password")
+      // But if they ARE found:
+      } else {
+        namePasser = {
+          name: userInput.name
+        };
+          res.render("select", namePasser);
+          console.log("found your username and password")
+      }
+  });
+});
 
 };
