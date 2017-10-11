@@ -24,20 +24,19 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
     - [x] db config
     - [ ] login and auth
     - [x] routes
-    - [ ] tests
+    - [x] tests
 - [ ] Frontend - 
     - [x] initial main.handlebars layout
     - [x] initial index.handlebars layout
-    - [ ] choose grahpics/sound fx
+    - [x] choose grahpics/sound fx
     - [x] design HUD/UI
-    - [ ] Implement w/ handlebars
+    - [x] Implement w/ handlebars
 - [ ] Logic - 
     - [x] Room navigation w/ items
     - [x] enemy spawns
     - [x] combat/xp
     - [x] lvl up/stats
     - [x] store
-    - [ ] pvp
 - [ ] Presentation
     - [ ] Slides/Demo
     - [ ] Talking points
@@ -48,6 +47,8 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 - [Green Team: Unnamed Turnbased Game](#green-team-unnamed-turnbased-game)
     - [Description](#description)
     - [Status](#status)
+            - [- #### WORK IN PROGRESS](#work-in-progress)
+        - [To Do](#to-do)
     - [How to Use (Game)](#how-to-use-game)
     - [Installation (Source Code)](#installation-source-code)
     - [Tech/Framework Used](#techframework-used)

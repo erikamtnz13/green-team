@@ -1,9 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
 	var Player = sequelize.define("Player", {
-	  Player_UID: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-      },
 	  name: {
 		type: DataTypes.STRING,
 		allowNull: true,

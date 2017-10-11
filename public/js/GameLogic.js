@@ -167,7 +167,6 @@ $(document).ready(function($)
 	//================================================================================//
 	var shopFunc = (player) =>
 	{
-		console.log("Open Store");
 		$("#storeDiv").show();
 		$("#sharpen").show();
 		$("#shield").show();
@@ -276,7 +275,6 @@ $(document).ready(function($)
 		{
 			if (player.gold >= player.potionGoldNeed)
 			{
-				console.log("potionbuy");
 				player.potions += 1;
 				player.gold -= player.potionGoldNeed;
 				$("#goldh3").html("Gold: " + player.gold);
@@ -309,7 +307,6 @@ $(document).ready(function($)
 		{
 			$.get("/api/players/" + UID, function(player)
 			{
-				console.log("PLAYER: " + JSON.stringify(player))
 				$("#potionBtnTxt").text(player.gold + " gold")
 				$("#dmgStat").text(player.damage + "/15")
 				$("#defStat").text(player.defense + "/10")
@@ -332,7 +329,6 @@ $(document).ready(function($)
 	//================================================================================//
 	var updatePlayer = function(player)
 	{
-		console.log("UPDATEPLAYER: " + JSON.stringify(player))
 		jQuery.ajax(
 		{
 			type: 'PUT',
@@ -357,7 +353,7 @@ $(document).ready(function($)
 			},
 			success: function(result)
 			{
-				console.log("RESULT: " + result)
+
 			}
 		})
     }
@@ -373,13 +369,11 @@ $(document).ready(function($)
 		{
 			if (player.gold >= player.dmgGoldNeed)
 			{
-				console.log("sharpen");
 				player.damage += 1;
 				player.gold -= player.dmgGoldNeed;
 				$("#goldh3").html("Gold: " + player.gold);
 				player.dmgGoldNeed += 25;
 				$("#dmgStat").text(player.damage + "/15");
-				console.log(player.damge);
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
@@ -407,13 +401,11 @@ $(document).ready(function($)
 		{
 			if (player.gold >= player.defGoldNeed)
 			{
-				console.log("sharpen");
 				player.defense += 1;
 				player.gold -= player.defGoldNeed;
 				$("#goldh3").html("Gold: " + player.gold);
 				player.defGoldNeed += 25;
 				$("#defStat").text(player.defense + "/15");
-				console.log(player.defense);
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
@@ -441,13 +433,11 @@ $(document).ready(function($)
 		{
 			if (player.gold >= player.accuGoldNeed)
 			{
-				console.log("sharpen");
 				player.attack += 1;
 				player.gold -= player.accuGoldNeed;
 				$("#goldh3").html("Gold: " + player.gold);
 				player.accuGoldNeed += 25;
 				$("#accuStat").text(player.attack + "/15");
-				console.log(player.attack);
 				$("#defBtnTxt").text(player.defGoldNeed + " gold");
 				$("#dmgBtnTxt").text(player.dmgGoldNeed + " gold");
 				$("#accBtnTxt").text(player.accuGoldNeed + " gold");
@@ -472,7 +462,6 @@ $(document).ready(function($)
 	var lvlUp = (player) =>
 	{
 		$("#msgDiv").html("YOU'VE LEVELED UP!")
-		console.log("playerxp " + player.xp);
 		if (player.xp <= 75)
 		{
 			if (player.exp >= 25)
@@ -482,9 +471,7 @@ $(document).ready(function($)
 				player.hp = player.total_hp;
 				player.gold += 75;
 				$("#goldh3").html("Gold: " + player.gold);
-				console.log("exp " + player.exp);
 				$("#eimg").show();
-				console.log("PLAYERUID: " + playerUID)
 				updatePlayer(player)
 				setTimeout(waitm, 10000);
 
@@ -511,7 +498,6 @@ $(document).ready(function($)
 				player.gold += 150;
 				$("#goldh3").html("Gold: " + player.gold);
 				player.hp = player.total_hp;
-				console.log("exp " + player.exp);
 				$("#eimg").show();
 				setTimeout(up, 400);
 
@@ -749,7 +735,6 @@ $(document).ready(function($)
 			$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="attackBtn" class="center-block btn btn-danger">Attack!</button></div><div class="col-md-4"></div></div>');
 			$("#mainGameBox").append('<div class="row"> <div class="col-md-12"></div> <div id="combatBtnDiv" class="col-md-4"><button type="button" id="waitAttackBtn" class="center-block btn btn">Wait...</button></div><div class="col-md-4"></div></div>');
 			$("#waitAttackBtn").hide();
-			console.log("Test enemy HP: " + monster.hp);
 			$("#eimg").show();
 			$("#enemyInfo").show();
 			$("#playerAttack").show();
@@ -792,22 +777,17 @@ $(document).ready(function($)
 				$("#monsterKilled").append("<h3 class='mx-auto d-block text-center'>You gained " + giveXP + " XP!</h3>")
 				$("#xph3").html("XP: " + player.xp)
 				$("#enemiesKilledh3").html("Killed: " + player.enemiesKilled)
-				console.log("Player XP: " + player.xp)
-				console.log("Enemies Killed: " + player.enemiesKilled)
-				console.log("EXP POOL: " + player.exp)
-				console.log("You've killed " + monster.name + "!")
+
 				//=====================
 				//RESETS MONSTER HEALTH
 				//=====================
 				function regen(monster)
 				{
 					monster.hp = monster.total_hp
-					console.log("monster enemy for regen: " + monster.name);
-					console.log("HP now?: " + monster.hp);
+	
 				}
 				if (player.xp <= 75)
 				{
-					console.log("if")
 					if (player.exp >= 25)
 					{
 						$("#headRow").hide(300)
@@ -911,11 +891,9 @@ $(document).ready(function($)
 			$("#attackBtn").show()
 		}
 		var pAttack = player.attack + GetRandomInt(1, 20)
-		console.log("PATTACK: " + pAttack)
 		if (pAttack > monster.defense)
 		{
 			var pDamage = player.damage + GetRandomInt(1, 8)
-			console.log("PDAMAGE: " + pDamage)
 			$("#playerDamage").show()
 			$("#playerImgs").replaceWith('<img src="' + player.char_attack + '" class="img-fluid" width="200" height="200" id="playerImgs">')
 			$("#eimg").replaceWith('<img src="' + player.char_spell + '" class="img-fluid" width="200" height="200" id="eimg">')
@@ -935,7 +913,6 @@ $(document).ready(function($)
 		{
 			$("#playerAttack").show()
 			$("#playerAttack").replaceWith('<h3 id="playerAttack">' + monster.name + ' dodged your attack!</h3>')
-			console.log("Missed attack. Attack roll " + pAttack + " < " + monster.defense)
 			setTimeout(waitm, 1600)
 
 			function waitm()
@@ -945,17 +922,14 @@ $(document).ready(function($)
 		}
 		if (monster.hp >= 1)
 		{
-			console.log("MONSTER: " + monster + "\nPLAYER: " + player)
 			setTimeout(waitz, 1800)
 
 			function waitz()
 			{
 				var eAttack = monster.attack + GetRandomInt(1, 20)
-				console.log("EATTACK: " + eAttack)
 				if (eAttack > player.defense)
 				{
 					var eDamage = monster.damage + GetRandomInt(1, 6)
-					console.log("EDAMAGE: " + eDamage)
 					$("#enemyDamage").show()
 					$("#playerImgs").replaceWith('<img src="' + monster.attackImg + '" class="img-fluid" width="200" height="200" id="playerImgs">')
 					$("#enemyDamage").replaceWith('<h4 id="enemyDamage">' + monster.name + ' did ' + eDamage + ' damage to you!</h4>')
@@ -968,7 +942,6 @@ $(document).ready(function($)
 					}
 					player.hp -= eDamage
 					updatePlayer(player)
-					console.log("player hp: " + player.hp)
 					$("#playerHPh3").replaceWith('<h3 id="playerHPh3">' + player.hp + " HP</h3>")
 					if (player.hp < 1)
 					{
@@ -999,7 +972,6 @@ $(document).ready(function($)
 				{
 					$("#enemyAttack").show()
 					$("#enemyAttack").replaceWith('<h4 id="enemyAttack">' + monster.name + ' Missed their attack!</h4>')
-					console.log("Missed attack. Attack roll " + eAttack + " < " + player.defense)
 					setTimeout(waitg, 1200)
 
 					function waitg()
@@ -1036,7 +1008,6 @@ $(document).ready(function($)
 	//================================================================================//
 	$("#enterDunBtn").on("click", function(e)
 	{
-		console.log("CLICKED")
 		getPlayerData(playerUID).then(function(player)
 		{
 			$("#mainGameBox").empty(200)
@@ -1109,7 +1080,6 @@ $(document).ready(function($)
 				});
 				$("#lvlUpBtn").on("click", function()
 				{
-					console.log("playerxp " + player.xp);
 					lvlUp(player)
 					updatePlayer(player)
 				});
