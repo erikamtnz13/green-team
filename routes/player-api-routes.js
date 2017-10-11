@@ -14,20 +14,20 @@ module.exports = function(app) {
 
   app.get("/scores",function(req,res){
     db.Player.findAll({}).then(function(dbPlayer){
-      console.log(dbPlayer);
+      // console.log(dbPlayer);
       res.render("scores", dbPlayer);
     });
     
   });
   app.get("/characters",function(req,res){
     db.Player.findAll({}).then(function(dbPlayer){
-      console.log(dbPlayer);
+      // console.log(dbPlayer);
       res.render("characters", dbPlayer);
     });
     
   });
   app.post("/characters", function(req, res) {
-    console.log(req.body)
+    // console.log(req.body)
     // req.body.UserInfoId = 3;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
