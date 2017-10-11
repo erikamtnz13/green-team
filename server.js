@@ -12,14 +12,6 @@ var db = require("./models");
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
-
-app.use(require('express-session')({
-    secret: 'jyny',
-    resave: false,
-    saveUninitialized: false
-}));
-
-
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
@@ -30,17 +22,26 @@ app.use(methodOverride("_method"));
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
+app.use(require('express-session')({
+	secret: 'jyny',
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session()); //
+
 app.engine("handlebars", exphbs({
 	defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
+
 
 passport.use('local', new LocalStrategy({
 	passReqToCallback: true
   },
   function( req, username, password, done) {
     // request object is now first argument
-	// ...
+	// ...)
 		if (!req.user){
 			db.UserInfo.create(req.body).then(function(data) {
 				return done(null, data);
@@ -61,22 +62,26 @@ passport.use('local', new LocalStrategy({
 passport.serializeUser(function(user, cb) {
 	cb(null, user.id);
   });
-  
-  passport.deserializeUser(function(id, cb) {
-	db.UserInfo.findById(id, function (err, user) {
-	  if (err) { return cb(err); }
-	  cb(null, user);
+
+passport.deserializeUser(function (id, cb) {
+	// changed this to a .then vs a callback, the call back was not being executed correctly
+	db.UserInfo.findById(id).then(function (user) {
+		if (user) {
+			// the example I saw had .get added to user here, works either way though
+			cb(null, user.get());
+		}
+		else {
+			cb(user.errors, null);
+		}
 	});
-  });
+});
 
 
 
-app.use(passport.initialize());
-app.use(passport.session()); //
 
 // Import routes and give the server access to them.
 require("./routes/html-routes.js")(app);
-require("./routes/userInfo-api-routes.js")(app);
+require("./routes/userInfo-api-routes.js")(app, passport);
 require("./routes/player-api-routes.js")(app);
 ///////
 db.sequelize.sync({ force: true }).then(function() {

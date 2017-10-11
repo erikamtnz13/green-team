@@ -7,8 +7,6 @@
 
 // Requiring our models
 var db = require("../models");
-var passport = require("passport");
-var passport = require("express-passport");
 
 // Routes
 // =============================================================
@@ -29,9 +27,10 @@ module.exports = function(app) {
     
   });
   app.post("/characters", function(req, res) {
-    console.log("Im here", req.session)
-    return res.send('success')
-    req.body.UserInfoId = req.session.user.id;
+
+    console.log("Im here")
+    // the user id is available on req.session.passport.user vs req.session.user.id
+    req.body.UserInfoId = req.session.passport.user;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
       // window.location = data;
