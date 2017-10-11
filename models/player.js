@@ -39,6 +39,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: true
       },
+      exp: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
       lvl: {
         type: DataTypes.INTEGER,
         defaultValue: 10
