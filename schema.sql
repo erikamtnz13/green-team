@@ -6,7 +6,7 @@ use game_db;
 drop table if exists user_info;
 drop table if exists player_info;
 
-/*
+
 create table user_info(
 	UserID integer(11) auto_increment not null,
     username varchar(31) not null,
@@ -30,7 +30,9 @@ create table user_info(
      primary key (player_id),
      foreign key (player_UID) references user_info (UserID)
  );
- */
+ 
 
- Insert into user_info (username,password,email) values ('coreyro','password','coreyro@email.com');
+ Insert into user_info (username,password,email) values ('testname','testword','testmail@testmail.com');
  insert into player_info (player_UID) values ('1');
+ 
+ SELECT * FROM user_info;

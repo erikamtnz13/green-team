@@ -90,8 +90,8 @@ module.exports = function(sequelize, DataTypes) {
 
 
 
-  Player.associate = function(models){
-    Player.belongsTo(models.UserInfo, {
+  player.associate = function(models){
+    player.belongsTo(models.UserInfo, {
       foreignKey: {
         allowNull: false
       }
@@ -99,5 +99,5 @@ module.exports = function(sequelize, DataTypes) {
 
     
   };
-    return Player;
+    return player;
   };

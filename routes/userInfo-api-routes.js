@@ -50,4 +50,7 @@ module.exports = function(app) {
   //   });
   // });
 
+  // Creates route to authenticate user:
+  app.get("/", )
+
 };
