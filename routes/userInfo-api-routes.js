@@ -27,16 +27,22 @@ module.exports = function(app) {
   });
   app.get("/",function(req,res){
     db.UserInfo.findAll({}).then(function(dbPlayer){
-      console.log(dbPlayer);
+      // console.log("GET ROOOT");
+      // console.log(dbPlayer);
       res.render("index", dbPlayer);
     });
     
   });
   app.post("/", function(req, res) {
+    // console.log("POST root");
     console.log(req.body)
+    //req.body.UserInfo = 3;
     db.UserInfo.create(req.body).then(function(data) {
       // res.json(data)
-      res.redirect("/");
+      // window.location = data;
+      // console.log(data);
+
+      res.redirect("/characters");
     });
   });
 

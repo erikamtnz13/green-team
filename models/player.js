@@ -1,9 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
-	var player = sequelize.define("player", {
-	  player_UID: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-      },
+	var Player = sequelize.define("Player", {
+	  // player_UID: {
+		// type: DataTypes.INTEGER,
+		// allowNull: true,
+    //   },
 	  name: {
 		type: DataTypes.STRING,
 		allowNull: true,
@@ -13,27 +13,31 @@ module.exports = function(sequelize, DataTypes) {
 	  },
 	  hp: {
 		type: DataTypes.INTEGER,
-		defaultValue: false
+		defaultValue: 10
       },
       total_hp: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          defaultValue: 10
       },
       attack: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          defaultValue: 10
       },
       damage: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        defaultValue: 10
       },
       defense: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        defaultValue: 10
       },
       xp: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        defaultValue: 10
+      },
+      exp: {
+        type: DataTypes.INTEGER,
+        allowNull: true
       },
       exp: {
         type: DataTypes.INTEGER,
@@ -41,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       lvl: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        defaultValue: 10
       },
       potions: {
         type: DataTypes.INTEGER,
@@ -86,18 +90,25 @@ module.exports = function(sequelize, DataTypes) {
     },
   {
     timestamps: true
-  });
-
-
-
-  Player.associate = function(models){
-    Player.belongsTo(models.UserInfo, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+  }
+// );
+  // Player.associate = function(models){
+  //   Player.belongsTo(models.UserInfo, {
+  //     foreignKey: {
+  //       //name: 'UserInfoId',
+  //       allowNull: false
+  //     }
+  //   });
 
     
-  };
+  // };
+
+  , {
+    classMethods: {
+      associate: function(models) {
+        Player.hasMany(models.UserInfo, {foreignKey: 'UserInfoId'});
+      }
+    }
+  });
     return Player;
   };

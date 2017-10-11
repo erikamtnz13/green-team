@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+
+body {
+=======
 body{
+>>>>>>> origin
 	background-image: url("../img/bg1.jpg");
 
 	
@@ -59,6 +64,7 @@ h2{
 #hpPotionsh3{
 
 }
+<<<<<<< HEAD
 
 #whichWay{
 	padding: 30px 0 30px 30px;
@@ -83,12 +89,53 @@ h2{
 	margin:-8px 0 0 0;
 }
 
+=======
+
+#whichWay{
+	padding: 30px 0 30px 30px;
+}
+
+#newRoomText, #newEnemy{
+	text-align: center;
+	font-family: 'Press Start 2P', cursive !important;
+	color: #fff !important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+	font-size: 14pt;
+	margin-left: 30px;
+}
+
+#storeDiv, #playerWeap{
+	
+}
+.border-radius{
+	border-radius:10px;
+}
+{
+	margin:-8px 0 0 0;
+}
+
+>>>>>>> origin
 #bottonHud{
 	border: #ffb800 solid 3px;
     margin-top: 50px;
     padding: 25px 0 10px 0;
 }
 
+<<<<<<< HEAD
+form:before {
+content: "";
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+/* background: #161616; */
+transition: .20s ease-in-out;
+float: left;
+z-index: -1;
+
+=======
+>>>>>>> origin
 #playerHP{
 	color: #3d0 !important;
     border: 2px #2b0 solid;
@@ -163,6 +210,13 @@ h2{
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 	font-size: 32pt;
 }
+h1,h2,h3,h4,h5,h6{
+    color: #fff;
+    text-shadow: 3px 4px 9px black;
+}
+h2 {
+  color: blanchedalmond
+  
 #newGameButtonDiv{
 	text-align: center;
 }
