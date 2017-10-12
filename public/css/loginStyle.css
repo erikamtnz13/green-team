@@ -1,5 +1,8 @@
 body {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  text-align: center;
+	font-family: 'Press Start 2P', cursive !important;
+	color: #ffb800 !important;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
   font-size: 18px;
   line-height: 34px;
   background:#161616
@@ -8,6 +11,17 @@ body {
   margin: 0
 }
 
+.jumbotron{
+	background-color:#444 !important;
+	border:1px solid #666;
+	padding: 25px 25px 25px 25px !important;
+}
+
+p{
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+}
 
 #inputs {
   align-items: center
@@ -17,7 +31,12 @@ h1 {
   color: white
 }
 
-
+#navbrand{
+	font-size: 14pt;
+	font-family: 'Press Start 2P', cursive;
+	color: #ffb800;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
 
 form {
   /* position: absolute; */
