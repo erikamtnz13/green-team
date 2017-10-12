@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
 	var Player = sequelize.define("Player", {
 	  name: {
-		type: DataTypes.STRING,
+    type: DataTypes.STRING,
 		allowNull: true,
 		validate: {
 		  len: [1, 140]
@@ -9,27 +9,27 @@ module.exports = function(sequelize, DataTypes) {
 	  },
 	  hp: {
 		type: DataTypes.INTEGER,
-		defaultValue: false
+		defaultValue: true
       },
       total_hp: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
       },
       attack: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
       },
       damage: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       defense: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       xp: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       exp: {
         type: DataTypes.INTEGER,
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       lvl: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       potions: {
         type: DataTypes.INTEGER,
@@ -69,18 +69,22 @@ module.exports = function(sequelize, DataTypes) {
       },
       char_img: {
         type: DataTypes.STRING,
+        defaultValue: "",
         allowNull: true,
       },
       char_idle: {
         type: DataTypes.STRING,
+        defaultValue: '/img/warrior/warrior_idle.gif',
         allowNull: true
       },
       char_attack: {
         type: DataTypes.STRING,
+        defaultValue: '/img/warrior/warrior_attack.gif',
         allowNull: true
       },
       char_spell: {
         type: DataTypes.STRING,
+        defaultValue: '/img/monsterAttack.gif',
         allowNull: true
       }
     },

@@ -27,14 +27,16 @@ module.exports = function(app) {
     
   });
   app.post("/characters", function(req, res) {
-    // console.log(req.body)
-    req.body.UserInfoId = 1;
+
+    console.log("Im here")
+    // the user id is available on req.session.passport.user vs req.session.user.id
+    req.body.UserInfoId = req.session.passport.user;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
       // window.location = data;
       res.redirect("/game");
     });
-  });
+  });   
 
   // GET route for getting all of the posts
   app.get("/api/players", function(req, res) {

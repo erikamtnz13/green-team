@@ -1,6 +1,7 @@
 var db = require("../models");
 
-module.exports = function(app) {
+// passed passport in as an argument vs requiring it again
+module.exports = function(app, passport) {
   app.get("/api/users", function(req, res) {
     // Here we add an "include" property to our options in our findAll query
     // We set the value to an array of the models we want to include in a left outer join
@@ -26,24 +27,27 @@ module.exports = function(app) {
     });
   });
   app.get("/",function(req,res){
+    
     db.UserInfo.findAll({}).then(function(dbPlayer){
       // console.log("GET ROOOT");
       // console.log(dbPlayer);
+      
       res.render("index", dbPlayer);
     });
     
   });
-  app.post("/", function(req, res) {
+  app.post("/",passport.authenticate('local'), function(req, res) {
     // console.log("POST root");
-    console.log(req.body)
+    console.log(req.user)
+    // console.log(req.body)
     //req.body.UserInfo = 3;
-    db.UserInfo.create(req.body).then(function(data) {
+    
   
       // window.location = data;
       // console.log(data);
       
-      res.redirect("/characters");
-    });
+      res.render("characters",req.user);
+    // });
   });
 
   // app.delete("/api/users/:id", function(req, res) {
