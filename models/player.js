@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
 	var Player = sequelize.define("Player", {
 	  name: {
-		type: DataTypes.STRING,
+    type: DataTypes.STRING,
 		allowNull: true,
 		validate: {
 		  len: [1, 140]
@@ -69,18 +69,22 @@ module.exports = function(sequelize, DataTypes) {
       },
       char_img: {
         type: DataTypes.STRING,
+        defaultValue: "",
         allowNull: true,
       },
       char_idle: {
         type: DataTypes.STRING,
+        defaultValue: '/img/warrior/warrior_idle.gif',
         allowNull: true
       },
       char_attack: {
         type: DataTypes.STRING,
+        defaultValue: '/img/warrior/warrior_attack.gif',
         allowNull: true
       },
       char_spell: {
         type: DataTypes.STRING,
+        defaultValue: '/img/monsterAttack.gif',
         allowNull: true
       }
     },
@@ -93,7 +97,7 @@ module.exports = function(sequelize, DataTypes) {
   Player.associate = function(models){
     Player.belongsTo(models.UserInfo, {
       foreignKey: {
-        allowNull: true
+        allowNull: false
       }
     });
 
