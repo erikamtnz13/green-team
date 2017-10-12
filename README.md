@@ -13,16 +13,17 @@ Unnamed Turnbased Game is a single and multiplayer browser game. The player enco
 
 ---
 ## Status
-- #### WORK IN PROGRESS
+- #### WORK IN PROGRESS - Main game loop complete
 
 ### To Do
-- [ ] Github -
+- [x] Github -
     - [x] readme
     - [x] create branches  
 - [ ] Backend - 
     - [x] models
     - [x] db config
-    - [ ] login and auth
+    - [x] login
+        - [ ] auth
     - [x] routes
     - [x] tests
 - [ ] Frontend - 
