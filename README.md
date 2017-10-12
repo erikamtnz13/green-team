@@ -79,6 +79,7 @@ Source https://github.com/erikamtnz13/green-team.git
 ## Tech/Framework Used
 
 - [Express](https://expressjs.com/ "express")
+- [Passport](http://passportjs.org/ "passport")
 - [Bootstrap 4](http://getbootstrap.com/ "bootstrap")
 - [Handlebars](http://handlebarsjs.com/installation.html "handlebars")
 - [Sequelize](http://docs.sequelizejs.com/ "sequelize")
@@ -92,7 +93,9 @@ Source https://github.com/erikamtnz13/green-team.git
 ## API Reference
 [![https://nodei.co/npm/express.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/express.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/express)
 
-[![https://nodei.co/npm/mysql.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/mysql.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/mysql)
+[![https://nodei.co/npm/mysql2.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/mysql2.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/mysql2)
+
+[![https://nodei.co/npm/passport.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/passport.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/passport)
 
 [![https://nodei.co/npm/sequelize.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/sequelize.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/sequelize)
 
@@ -101,7 +104,6 @@ Source https://github.com/erikamtnz13/green-team.git
 [![https://nodei.co/npm/express-handlebars?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/express-handlebars.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/express-handlebars)
 
 [![https://nodei.co/npm/method-override.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/method-override.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/method-override)
-
 
 [![https://nodei.co/npm/mysql2.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/mysql2.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/mysql2)
 
