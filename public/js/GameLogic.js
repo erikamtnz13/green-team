@@ -976,11 +976,11 @@ $(document).ready(function($)
 							var death = confirm("You have been killed. Play again?")
 							if (death)
 							{
-								window.location.replace("game.html")
+								window.location.replace("/")
 							}
 							else
 							{
-								window.location.replace("index.html")
+								window.location.replace("/")
 							}
 						}
 					}
