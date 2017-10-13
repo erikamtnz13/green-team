@@ -15,7 +15,7 @@ $(document).ready(function($)
 	$("#mainGameBox").show()
 	$("#lvlUpBtn").hide()
 	$("#foundEnemy").hide()
-	localStorage.UID = player.id;
+	localStorage.UID = 1;
 	const playerUID = localStorage.getItem("UID")
 
 
@@ -113,8 +113,6 @@ $(document).ready(function($)
 		})
 	}
 
-	
-
 
 
 	//================================================================================//
@@ -158,7 +156,7 @@ $(document).ready(function($)
 			hp: 14,
 			total_hp: 14,
 			attack: 0,
-			damage: 0,
+			damage: 1,
 			defense: 3,
 			items: ['gold', 'potion'],
 			xp: +11,
@@ -472,7 +470,6 @@ $(document).ready(function($)
 				player.gold += 75;
 				$("#goldh3").html("Gold: " + player.gold);
 				$("#eimg").show();
-				$("#playerLevel").html("Player Level: " + player.lvl)
 				updatePlayer(player)
 				setTimeout(waitm, 1000);
 
@@ -497,9 +494,8 @@ $(document).ready(function($)
 				player.lvl += 1;
 				player.total_hp += 10;
 				player.gold += 150;
-				player.hp = player.total_hp;
 				$("#goldh3").html("Gold: " + player.gold);
-				$("#playerLevel").html("Player Level: " + player.lvl)
+				player.hp = player.total_hp;
 				$("#eimg").show();
 				updatePlayer(player)
 				setTimeout(up, 400);
@@ -966,20 +962,27 @@ $(document).ready(function($)
 					$("#playerHPh3").replaceWith('<h3 id="playerHPh3">' + player.hp + " HP</h3>")
 					if (player.hp < 1)
 					{
-						$("#hudRow").hide()
+						$("#mainGameBox").hide()
 						$("#attackBtn").hide()
 						$("#waitAttackBtn").hide()
 						$("#playerAttack").hide()
 						$("#playerDamage").hide()
 						$("#enemyName").hide()
-						$("#shopButton").hide()
-						$("#playerHPh3").html('0 HP')
-						$("#playerImgs").replaceWith('<img src="/img/rip.png" class="img-fluid" width="200" height="200" id="playerImgs">')
-						setTimeout(dead,1900)
-						function dead(){
-							youAreDead(player)
-						}
+						$("#playerHPh3").replaceWith('<h3 id="playerHPh3">YOU ARE DEAD</h3>')
+						setTimeout(waity, 2800)
 
+						function waity()
+						{
+							var death = confirm("You have been killed. Play again?")
+							if (death)
+							{
+								window.location.replace("/")
+							}
+							else
+							{
+								window.location.replace("/")
+							}
+						}
 					}
 				}
 				else
@@ -1023,28 +1026,6 @@ $(document).ready(function($)
 				}
 			}
 		}
-	}
-
-
-
-	var youAreDead = (player) =>{
-		$("#mainGameBox").empty()
-		$("#hudRow").hide()
-		var deadDiv = $("<div class='row'><div class='col-md-12' id='deadDiv'></div></div><div class='row'><div id='playAgain' class='col-md-12'></div></div>")
-		$("#mainGameBox").append(deadDiv)
-		$("#deadDiv").append("<h1>YOU ARE DEAD</h1>")
-		$("#deadDiv").append("<p class='text-center'>The dungeon claims another soul.</p>")
-		$("#deadDiv").append("<h2>Play again?</h2>")
-		$("#playAgain").append("<button class='text-center mx-auto d-block btn btn-warning' id='playYes'>Yes</button><button class='text-center mx-auto d-block btn btn-warning' id='playNo'>No</button>")
-
-	
-		$("#playYes").on("click", function(){
-			window.location.replace("/")
-		})
-	
-		$("#playNo").on("click", function(){
-			window.location.replace("/")
-		})
 	}
 
 
@@ -1126,4 +1107,3 @@ $(document).ready(function($)
 		})
 	})
 })
-

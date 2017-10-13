@@ -33,12 +33,14 @@ module.exports = function(app, passport) {
       // console.log(dbPlayer);
       
       res.render("index", dbPlayer);
+
     });
     
   });
   app.post("/",passport.authenticate('local'), function(req, res) {
     // console.log("POST root");
     console.log(req.user)
+    
     // console.log(req.body)
     //req.body.UserInfo = 3;
     

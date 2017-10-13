@@ -68,6 +68,7 @@ module.exports = function(app) {
       include: [db.UserInfo]
     }).then(function(dbPlayer) {
       res.json(dbPlayer);
+      
      });
   });
 
