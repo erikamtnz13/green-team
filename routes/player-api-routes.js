@@ -33,7 +33,7 @@ module.exports = function(app) {
     req.body.UserInfoId = req.session.passport.user;
     db.Player.create(req.body).then(function(data) {
       // res.json(data)
-      // window.location = data;
+      console.log(data)
       res.redirect("/game");
     });
   });   
