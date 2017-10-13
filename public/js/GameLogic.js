@@ -15,7 +15,7 @@ $(document).ready(function($)
 	$("#mainGameBox").show()
 	$("#lvlUpBtn").hide()
 	$("#foundEnemy").hide()
-	localStorage.UID = 1;
+	localStorage.UID = player.id;
 	const playerUID = localStorage.getItem("UID")
 
 
@@ -112,6 +112,8 @@ $(document).ready(function($)
 			}
 		})
 	}
+
+	
 
 
 
@@ -975,7 +977,7 @@ $(document).ready(function($)
 						$("#playerImgs").replaceWith('<img src="/img/rip.png" class="img-fluid" width="200" height="200" id="playerImgs">')
 						setTimeout(dead,1900)
 						function dead(){
-							return youAreDead(player)
+							youAreDead(player)
 						}
 
 					}
